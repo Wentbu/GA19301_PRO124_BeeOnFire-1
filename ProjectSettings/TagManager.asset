@@ -41,3 +41,33 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Road
+    uniqueID: 2589251461
+    locked: 0
+  - name: Ground
+    uniqueID: 719257725
+    locked: 0
+  - name: itemplayground
+    uniqueID: 2365816531
+    locked: 0
+  - name: itemplayground2
+    uniqueID: 3457133751
+    locked: 0
+  - name: House
+    uniqueID: 3863854109
+    locked: 0
+  - name: house2
+    uniqueID: 1686943251
+    locked: 0
+  - name: tree
+    uniqueID: 128337801
+    locked: 0
+  - name: tree2
+    uniqueID: 3066717403
+    locked: 0
+  - name: sanbay
+    uniqueID: 742743053
+    locked: 0
+  - name: helicopter
+    uniqueID: 528231707
+    locked: 0
