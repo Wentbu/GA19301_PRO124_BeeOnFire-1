@@ -1,11 +1,11 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Bully : MonoBehaviour
 {
     [SerializeField] Animator animator;
     [SerializeField] Rigidbody2D rb2d;
     [SerializeField] private GameObject player;
+    [SerializeField] private LayerMask WhatIsObstacles;
     [SerializeField] private Vector2 movement;
     [SerializeField] private float Distance; // Khoảng cách hiện tại giữa Bully và người chơi
     [SerializeField] private float moveSpeed;
@@ -19,7 +19,9 @@ public class Bully : MonoBehaviour
     private bool isMoving = false; // Biến kiểm soát trạng thái di chuyển của Bully
     private bool isPatrolling = false;
     private float patrolStartTime;
-    private float patrolDuration = 10f;
+    [SerializeField] private float patrolDuration = 10f;
+    [SerializeField] private float _patrolDistance;
+
 
     private void Awake()
     {
@@ -34,9 +36,10 @@ public class Bully : MonoBehaviour
 
     private void Update()
     {
+        bool isPlayerHidden = IsPlayerHidden();
         Distance = Vector2.Distance(transform.position, player.transform.position);
 
-        if (Distance < DistanceToPlayer && Distance <= MaxDistance)
+        if (Distance < DistanceToPlayer && Distance <= MaxDistance && isPlayerHidden == false)
         {
             playerInSight = true;
             lastKnownPosition = player.transform.position;
@@ -98,7 +101,7 @@ public class Bully : MonoBehaviour
         if (patrolTimeElapsed < patrolDuration)
         {
             // Điều chỉnh khoảng cách tuần tra
-            float patrolDistance = 5f; // Bạn có thể thay đổi giá trị này để điều chỉnh khoảng cách tuần tra
+            float patrolDistance = _patrolDistance; // Có thể thay đổi giá trị này để điều chỉnh khoảng cách tuần tra
 
             // Di chuyển qua lại giữa hai điểm xung quanh vị trí cuối cùng thấy người chơi
             Vector2 patrolPoint1 = lastKnownPosition + new Vector2(patrolDistance, 0);
@@ -139,6 +142,15 @@ public class Bully : MonoBehaviour
             // Reset lại trạng thái khi Bully quay về vị trí ban đầu
             ResetBully();
         }
+    }
+
+    private bool IsPlayerHidden()
+    {
+        // Kiểm tra xem người chơi có nằm sau vật thể hay không bằng cách sử dụng Raycast
+        RaycastHit2D hits = Physics2D.Linecast(transform.position, player.transform.position, WhatIsObstacles);
+
+        // Nếu Raycast không va chạm với vật thể nào, tức là người chơi không bị che giấu
+        return hits.collider != null;
     }
 
     private void ResetBully()
