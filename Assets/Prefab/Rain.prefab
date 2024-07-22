@@ -10111,7 +10111,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5624063471209685115}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 082febcd022c73f4abfb9478f9d69fd2, type: 3}
+  m_Script: {fileID: 11500000, guid: 06530898caa681b47afc051ab921ee58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   rainDuration: 10
@@ -10119,8 +10119,6 @@ MonoBehaviour:
   uiFill: {fileID: 7290966484525805715}
   sickIcon: {fileID: 0}
   underRainBar: {fileID: 1600974447769652009}
-  top_DownMovement: {fileID: 0}
-  ReduceHT: {fileID: 0}
 --- !u!61 &3259529359126249885
 BoxCollider2D:
   m_ObjectHideFlags: 0
