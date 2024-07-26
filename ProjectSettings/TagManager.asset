@@ -3,14 +3,19 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Waypoint1
+  - Car
+  - ViewRange
+  - Intersection
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Car
   - Water
   - UI
+  - Intersection
   - 
   - 
   - 
@@ -33,11 +38,13 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
-  - 
-  - 
+  - Waypoint1
+  - Pipe2
+  - Pipe1
   m_SortingLayers:
+  - name: Hidden
+    uniqueID: 746817081
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
@@ -70,4 +77,7 @@ TagManager:
     locked: 0
   - name: helicopter
     uniqueID: 528231707
+    locked: 0
+  - name: Show
+    uniqueID: 788800317
     locked: 0
