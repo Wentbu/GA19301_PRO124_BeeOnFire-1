@@ -1,16 +1,24 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using UnityEngine;
 
 public class Bully : MonoBehaviour
 {
     [SerializeField] Animator animator;
     [SerializeField] Rigidbody2D rb2d;
     [SerializeField] private GameObject player;
-    [SerializeField] private LayerMask WhatIsObstacles;
     [SerializeField] private Vector2 movement;
-    [SerializeField] private float Distance; // Khoảng cách hiện tại giữa Bully và người chơi
+    [SerializeField] private float Distance;
     [SerializeField] private float moveSpeed;
-    [SerializeField] private float DistanceToPlayer; // Ngưỡng khoảng cách để Bully bắt đầu đi theo người chơi
+    [SerializeField] private float DistanceToPlayer;
     [SerializeField] private float MaxDistance; // Khoảng cách tối đa Bully có thể đi
+
+    [SerializeField] private List<SteeringBehaviour> steeringBehaviours;
+    [SerializeField] private List<Detector> detectors;
+    [SerializeField] private AIData aiData;
+    [SerializeField] private float detectionDelay = 0.05f;
+    [SerializeField] private ContextSolver movementDirectionSolver;
 
     private Vector2 initialPosition;
     private Vector2 lastKnownPosition;
@@ -22,24 +30,28 @@ public class Bully : MonoBehaviour
     [SerializeField] private float patrolDuration = 10f;
     [SerializeField] private float _patrolDistance;
 
-
     private void Awake()
     {
         rb2d = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
     }
-
-    private void Start()
+    void Start()
     {
+        InvokeRepeating("PerformDetection", 0, detectionDelay);
         initialPosition = transform.position;
     }
-
-    private void Update()
+    private void PerformDetection()
     {
-        bool isPlayerHidden = IsPlayerHidden();
+        foreach (Detector detector in detectors)
+        {
+            detector.Detect(aiData);
+        }
+    }
+    void Update()
+    {
         Distance = Vector2.Distance(transform.position, player.transform.position);
 
-        if (Distance < DistanceToPlayer && Distance <= MaxDistance && isPlayerHidden == false)
+        if (Distance <= DistanceToPlayer && Distance <= MaxDistance)
         {
             playerInSight = true;
             lastKnownPosition = player.transform.position;
@@ -77,18 +89,15 @@ public class Bully : MonoBehaviour
             ReturnToInitialPosition();
         }
     }
-
     private void FixedUpdate()
     {
-        if (isMoving)
-        {
-            rb2d.MovePosition(rb2d.position + movement * moveSpeed * Time.fixedDeltaTime);
-        }
+        rb2d.MovePosition(rb2d.position + movement * moveSpeed * Time.fixedDeltaTime);
     }
 
     private void MoveTowardsPlayer()
     {
-        movement = (Vector2)(player.transform.position - transform.position).normalized;
+        movement = movementDirectionSolver.GetDirectionToMove(steeringBehaviours, aiData);
+        movement.Normalize();
         animator.SetFloat("Horizontal", movement.x);
         animator.SetFloat("Vertical", movement.y);
         animator.SetFloat("Speed", movement.sqrMagnitude);
@@ -142,15 +151,6 @@ public class Bully : MonoBehaviour
             // Reset lại trạng thái khi Bully quay về vị trí ban đầu
             ResetBully();
         }
-    }
-
-    private bool IsPlayerHidden()
-    {
-        // Kiểm tra xem người chơi có nằm sau vật thể hay không bằng cách sử dụng Raycast
-        RaycastHit2D hits = Physics2D.Linecast(transform.position, player.transform.position, WhatIsObstacles);
-
-        // Nếu Raycast không va chạm với vật thể nào, tức là người chơi không bị che giấu
-        return hits.collider != null;
     }
 
     private void ResetBully()

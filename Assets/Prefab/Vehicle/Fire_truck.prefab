@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 3150282611469443581}
   - component: {fileID: 84415959610692226}
   m_Layer: 6
-  m_Name: Car
+  m_Name: Fire_truck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -105,7 +105,7 @@ SpriteRenderer:
   m_SortingLayerID: 1189592171
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -1613868589, guid: 4ff5a5f38f77ae54aae5562ef4236235, type: 3}
+  m_Sprite: {fileID: 719401593, guid: 71a6319a91e2ad14ea2ed117a2cae423, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -148,18 +148,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.30335808, y: -1.2073181}
+  m_Offset: {x: 0.25897884, y: -1.439081}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 8, y: 5}
+    oldSize: {x: 9.6875, y: 5}
     newSize: {x: 5.3125, y: 2.25}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 7.394886, y: 2.5715175}
+  m_Size: {x: 9.160227, y: 2.1474404}
   m_EdgeRadius: 0
 --- !u!114 &8389723679431397086
 MonoBehaviour:
