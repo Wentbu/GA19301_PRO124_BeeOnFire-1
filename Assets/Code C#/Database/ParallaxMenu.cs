@@ -4,18 +4,28 @@ using UnityEngine;
 
 public class ParallaxMenu : MonoBehaviour
 {
-    [SerializeField] private Transform Camera;
-    [SerializeField] private float moveSpeed;
+    [SerializeField] private Transform cameraTransform;
+    [SerializeField] private float moveSpeed ;
+    [SerializeField] private float positionBR = 100f;
+    [SerializeField] private float smoothness;
 
+    private Vector3 targetPosition;
 
-    // Update is called once per frame
+    void Start()
+    {
+        targetPosition = transform.position;
+    }
+
     void Update()
     {
-        transform.Translate(-1 * moveSpeed * Time.deltaTime, 0f, 0f);
+        float newPositionX = Mathf.Lerp(transform.position.x, transform.position.x - moveSpeed * Time.deltaTime, smoothness);
+        targetPosition = new Vector3(newPositionX, transform.position.y, transform.position.z);
 
-        if (Camera.position.x >= transform.position.x + 75f)
+        transform.position = targetPosition;
+
+        if (cameraTransform.position.x >= transform.position.x + positionBR)
         {
-            transform.position = new Vector2(Camera.position.x + 75f, transform.position.y);
+            transform.position = new Vector3(cameraTransform.position.x + positionBR - 23f, transform.position.y, transform.position.z);
         }
     }
 }
