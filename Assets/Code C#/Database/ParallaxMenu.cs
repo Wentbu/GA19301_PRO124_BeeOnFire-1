@@ -13,9 +13,9 @@ public class ParallaxMenu : MonoBehaviour
     {
         transform.Translate(-1 * moveSpeed * Time.deltaTime, 0f, 0f);
 
-        if (Camera.position.x >= transform.position.x + 84f)
+        if (Camera.position.x >= transform.position.x + 75f)
         {
-            transform.position = new Vector2(Camera.position.x + 84f, transform.position.y);
+            transform.position = new Vector2(Camera.position.x + 75f, transform.position.y);
         }
     }
 }
