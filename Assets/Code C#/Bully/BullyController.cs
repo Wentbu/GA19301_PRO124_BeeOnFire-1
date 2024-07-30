@@ -138,7 +138,7 @@ public class BullyController : MonoBehaviour
         if (Vector2.Distance(transform.position, initialPosition) > 0.01f)
         {
             agent.SetDestination(initialPosition);
-            FindBetterPath(player.position);
+            FindBetterPath(initialPosition);
             movement = agent.velocity;
             animator.SetFloat("Horizontal", movement.x);
             animator.SetFloat("Vertical", movement.y);
