@@ -57,6 +57,12 @@ TagManager:
   - name: itemplayground
     uniqueID: 2365816531
     locked: 0
+  - name: House3
+    uniqueID: 4255606769
+    locked: 0
+  - name: Player
+    uniqueID: 2424540825
+    locked: 0
   - name: itemplayground2
     uniqueID: 3457133751
     locked: 0
