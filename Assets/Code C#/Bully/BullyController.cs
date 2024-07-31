@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
+using static BullyController;
 
 public class BullyController : MonoBehaviour
 {
     private NavMeshAgent agent;
-    [SerializeField] private float searchRadius = 10f;
+
     [SerializeField] Animator animator;
     [SerializeField] private Vector2 movement;
     [SerializeField] Rigidbody2D rb2d;
@@ -23,8 +25,14 @@ public class BullyController : MonoBehaviour
     private bool isMoving = false; // Biến kiểm soát trạng thái di chuyển của Bully
     private bool isPatrolling = false;
     private float patrolStartTime;
-    [SerializeField] private float patrolDuration = 10f;
-    [SerializeField] private float _patrolDistance;
+    private Vector2 currentPatrolTarget;
+    private float noiseOffsetX;
+    private float noiseOffsetY;
+    [SerializeField] private float searchRadius = 10f;
+    private float patrolTimer = 0f;
+    [SerializeField] private float patrolDuration;
+    [SerializeField] private float waitTime = 1f;
+    [SerializeField] private float patrolRadius;
 
     private void Awake()
     {
@@ -38,6 +46,8 @@ public class BullyController : MonoBehaviour
         agent.updateRotation = false;
         agent.updateUpAxis = false;
         initialPosition = transform.position;
+        noiseOffsetX = Random.value * 1000f;
+        noiseOffsetY = Random.value * 1000f;
     }
 
     // Update is called once per frame
@@ -57,7 +67,7 @@ public class BullyController : MonoBehaviour
         {
             timeSinceLastSeenPlayer += Time.deltaTime;
 
-            if (timeSinceLastSeenPlayer > 10f)
+            if (timeSinceLastSeenPlayer > patrolDuration)
             {
                 playerInSight = false;
                 isPatrolling = false;
@@ -74,9 +84,12 @@ public class BullyController : MonoBehaviour
         if (playerInSight)
         {
             MoveTowardsPlayer();
+
+            patrolTimer = 0f; // Reset bộ đếm thời gian khi thấy người chơi
         }
         else if (isPatrolling)
         {
+            StartCoroutine(WaitBeforePatrol());
             Patrol();
         }
         else
@@ -85,52 +98,24 @@ public class BullyController : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
-    {
-
-    }
-
     private void MoveTowardsPlayer()
     {
         agent.SetDestination(player.position);
         FindBetterPath(player.position);
         movement = agent.velocity;
-        animator.SetFloat("Horizontal", movement.x);
-        animator.SetFloat("Vertical", movement.y);
-        animator.SetFloat("Speed", movement.sqrMagnitude);
+        UpdateAnimation();
         isMoving = true;
     }
 
     private void Patrol()
     {
-        float patrolTimeElapsed = Time.time - patrolStartTime;
-        if (patrolTimeElapsed < patrolDuration)
+        if (agent.remainingDistance <= agent.stoppingDistance)
         {
-            // Điều chỉnh khoảng cách tuần tra
-            float patrolDistance = _patrolDistance; // Có thể thay đổi giá trị này để điều chỉnh khoảng cách tuần tra
-
-            // Di chuyển qua lại giữa hai điểm xung quanh vị trí cuối cùng thấy người chơi
-            Vector2 patrolPoint1 = lastKnownPosition + new Vector2(patrolDistance, 0);
-            Vector2 patrolPoint2 = lastKnownPosition + new Vector2(-patrolDistance, 0);
-            Vector2 targetPoint = (patrolTimeElapsed % 2 < 1) ? patrolPoint1 : patrolPoint2;
-
-            if (Vector2.Distance(transform.position, targetPoint) > 0.1f)
-            {
-                agent.SetDestination(player.position);
-                FindBetterPath(player.position);
-                movement = agent.velocity;
-                animator.SetFloat("Horizontal", movement.x);
-                animator.SetFloat("Vertical", movement.y);
-                animator.SetFloat("Speed", movement.sqrMagnitude);
-                isMoving = true;
-            }
+            currentPatrolTarget = GenerateRandomPatrolPoint();
+            agent.SetDestination(currentPatrolTarget);
         }
-        else
-        {
-            // Kết thúc tuần tra và quay lại vị trí ban đầu
-            isPatrolling = false;
-            ReturnToInitialPosition();
-        }
+        movement = agent.velocity;
+        UpdateAnimation();
     }
 
     private void ReturnToInitialPosition()
@@ -138,11 +123,9 @@ public class BullyController : MonoBehaviour
         if (Vector2.Distance(transform.position, initialPosition) > 0.01f)
         {
             agent.SetDestination(initialPosition);
-            FindBetterPath(initialPosition);
+            FindBetterPath(player.position);
             movement = agent.velocity;
-            animator.SetFloat("Horizontal", movement.x);
-            animator.SetFloat("Vertical", movement.y);
-            animator.SetFloat("Speed", movement.sqrMagnitude);
+            UpdateAnimation();
             isMoving = true;
         }
         else
@@ -177,19 +160,45 @@ public class BullyController : MonoBehaviour
         timeSinceLastSeenPlayer = 0f;
     }
 
-    private void FindBetterPath(Vector3 target)
+    private void UpdateAnimation()
+    {
+        animator.SetFloat("Horizontal", movement.x);
+        animator.SetFloat("Vertical", movement.y);
+        animator.SetFloat("Speed", movement.sqrMagnitude);
+    }
+
+    private Vector2 GenerateRandomPatrolPoint()
+    {
+        Vector2 randomDirection = Random.insideUnitCircle * patrolRadius;
+        Vector2 randomPoint = initialPosition + randomDirection;
+        Vector3 randomPoint3D = new Vector3(randomPoint.x, randomPoint.y, 0);
+        if (NavMesh.SamplePosition(randomPoint3D, out NavMeshHit hit, patrolRadius, NavMesh.AllAreas))
+        {
+            return new Vector2(hit.position.x, hit.position.y);
+        }
+        return new Vector2(transform.position.x, transform.position.y);
+    }
+
+    private void FindBetterPath(Vector2 target)
     {
         NavMeshPath path = new NavMeshPath();
         if (NavMesh.CalculatePath(transform.position, target, NavMesh.AllAreas, path))
         {
             if (path.status == NavMeshPathStatus.PathPartial)
             {
-                // If the path is partial, try to find a better path
-                Vector3 furthestReachablePoint = path.corners[path.corners.Length - 1];
+                // Tìm điểm xa nhất có thể đi được
+                Vector2 furthestReachablePoint = path.corners[path.corners.Length - 1];
+
+                // Tìm điểm gần nhất trên NavMesh
                 NavMeshHit hit;
                 if (NavMesh.SamplePosition(furthestReachablePoint, out hit, searchRadius, NavMesh.AllAreas))
                 {
-                    agent.SetDestination(hit.position);
+                    // Tìm đường đi mới từ điểm hiện tại đến điểm gần nhất trên NavMesh
+                    NavMeshPath newPath = new NavMeshPath();
+                    if (NavMesh.CalculatePath(transform.position, hit.position, NavMesh.AllAreas, newPath))
+                    {
+                        agent.SetPath(newPath);
+                    }
                 }
             }
             else
@@ -197,5 +206,10 @@ public class BullyController : MonoBehaviour
                 agent.SetPath(path);
             }
         }
+    }
+
+    IEnumerator WaitBeforePatrol()
+    {
+        yield return new WaitForSeconds(waitTime);
     }
 }
