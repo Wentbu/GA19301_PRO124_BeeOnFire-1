@@ -6,7 +6,7 @@ public class ParallaxMenu : MonoBehaviour
 {
     [SerializeField] private Transform cameraTransform;
     [SerializeField] private float moveSpeed ;
-    [SerializeField] private float positionBR = 100f;
+    [SerializeField] private float positionBR;
     [SerializeField] private float smoothness;
 
     private Vector3 targetPosition;
@@ -25,7 +25,7 @@ public class ParallaxMenu : MonoBehaviour
 
         if (cameraTransform.position.x >= transform.position.x + positionBR)
         {
-            transform.position = new Vector3(cameraTransform.position.x + positionBR - 23f, transform.position.y, transform.position.z);
+            transform.position = new Vector3(cameraTransform.position.x + positionBR , transform.position.y, transform.position.z);
         }
     }
 }
