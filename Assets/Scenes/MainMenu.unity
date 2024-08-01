@@ -2415,8 +2415,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraTransform: {fileID: 1096849193}
-  moveSpeed: 5
-  positionBR: 75
+  moveSpeed: 7
+  positionBR: 76.57
   smoothness: 1
 --- !u!1 &739653368
 GameObject:
@@ -2519,7 +2519,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraTransform: {fileID: 1096849193}
   moveSpeed: 5
-  positionBR: 75
+  positionBR: 76.57
   smoothness: 1
 --- !u!1 &765617075
 GameObject:
@@ -2622,7 +2622,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraTransform: {fileID: 1096849193}
   moveSpeed: 7
-  positionBR: 75
+  positionBR: 76.57
   smoothness: 1
 --- !u!1 &774420199
 GameObject:
@@ -13346,7 +13346,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraTransform: {fileID: 1096849193}
   moveSpeed: 6
-  positionBR: 75
+  positionBR: 76.57
   smoothness: 1
 --- !u!1 &1497807482
 GameObject:
@@ -32274,8 +32274,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraTransform: {fileID: 1096849193}
-  moveSpeed: 5
-  positionBR: 75
+  moveSpeed: 7
+  positionBR: 76.57
   smoothness: 1
 --- !u!1 &2130721274
 GameObject:
@@ -32378,7 +32378,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraTransform: {fileID: 1096849193}
   moveSpeed: 5
-  positionBR: 75
+  positionBR: 76.57
   smoothness: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
