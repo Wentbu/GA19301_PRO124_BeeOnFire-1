@@ -193,12 +193,6 @@ public class BullyController : MonoBehaviour
         isSearching = false;
     }
 
-    private Vector2 PredictPlayerPosition()
-    {
-        Vector2 playerVelocity = player.GetComponent<Rigidbody2D>().velocity;
-        return (Vector2)player.position + playerVelocity * predictionTime;
-    }
-
     private void MoveTowardsPredictedPosition()
     {
         Vector2 predictedPosition = PredictPlayerPosition();
@@ -206,6 +200,12 @@ public class BullyController : MonoBehaviour
         movement = aiPath.desiredVelocity;
         UpdateAnimation();
         isMoving = true;
+    }
+
+    private Vector2 PredictPlayerPosition()
+    {
+        Vector2 playerVelocity = player.GetComponent<Rigidbody2D>().velocity;
+        return (Vector2)player.position + playerVelocity * predictionTime;
     }
 
     private Vector2 AvoidObstacles(Vector2 currentMovement)
@@ -244,21 +244,5 @@ public class BullyController : MonoBehaviour
         animator.SetFloat("Horizontal", movement.x);
         animator.SetFloat("Vertical", movement.y);
         animator.SetFloat("Speed", movement.sqrMagnitude);
-    }
-
-    private Vector2 GenerateRandomPatrolPoint()
-    {
-        float noiseX = Mathf.PerlinNoise(noiseOffsetX, Time.time * 0.1f) * 2 - 1;
-        float noiseY = Mathf.PerlinNoise(noiseOffsetY, Time.time * 0.1f) * 2 - 1;
-        Vector2 noiseDirection = new Vector2(noiseX, noiseY).normalized;
-
-        Vector2 randomPoint = initialPosition + noiseDirection * patrolRadius;
-
-        GraphNode node = AstarPath.active.GetNearest(randomPoint).node;
-        if (node != null && node.Walkable)
-        {
-            return (Vector3)node.position;
-        }
-        return transform.position;
     }
 }
