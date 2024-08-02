@@ -1,4 +1,4 @@
-using System;
+Ôªøusing System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using Newtonsoft.Json;
 using UnityEngine.Windows;
+using static UnityEngine.Rendering.DebugUI.Table;
 
 public class LoginWeb : Singleton<LoginWeb>
 {
@@ -19,11 +20,10 @@ public class LoginWeb : Singleton<LoginWeb>
 
     private static readonly string LoginURL = "https://phamduchuan.name.vn/LogIn.php";
     private static readonly string RegisterURL = "https://phamduchuan.name.vn/RegisterUser.php";
-    private static readonly string rank = "https://phamduchuan.name.vn/rank.php";
-    private static readonly string SaveGameplay = "https://phamduchuan.name.vn/SaveGameTime.php";
-    private static readonly string GetItemValue = "https://phamduchuan.name.vn/GetValueItems.php";
+    private static readonly string rankURL = "https://phamduchuan.name.vn/rank.php";
+    private static readonly string GetItemValueURL = "https://phamduchuan.name.vn/GetValueItems.php";
 
-
+    public GameObject[] rows;
     private void Start()
     {
         StartCoroutine(GetItems());
@@ -61,18 +61,18 @@ public class LoginWeb : Singleton<LoginWeb>
     {
         Debug.Log(response);
 
-        // Ph‚n tÌch ph?n h?i JSON
+        // Ph√¢n t√≠ch ph?n h?i JSON
         ResponseData responseData = JsonUtility.FromJson<ResponseData>(response);
 
         if (responseData.status == "success")
         {
-            dangNhap.text = "??ng nh?p th‡nh cÙng! M„ ng??i d˘ng: " + responseData.User_Id;
+            dangNhap.text = "ƒêƒÉng nh·∫≠p th√†nh c√¥ng!";
             input.Instance.userid = responseData.User_Id;
-            // Th?c hi?n c·c logic game khi ??ng nh?p th‡nh cÙng
+            // Th?c hi?n c√°c logic game khi ??ng nh?p th√†nh c√¥ng
         }
         else
         {
-            dangNhap.text = "??ng nh?p th?t b?i: " + responseData.message;
+            dangNhap.text = "ƒêƒÉng nh·∫≠p th·∫•t b·∫°i: " + responseData.message;
         }
     }
 
@@ -117,16 +117,16 @@ public class LoginWeb : Singleton<LoginWeb>
     {
         Debug.Log(response);
 
-        // Ph‚n tÌch ph?n h?i JSON
+        // Ph√¢n t√≠ch ph?n h?i JSON
         var responseDataRegister = JsonUtility.FromJson<ResponseData>(response);
 
         if (responseDataRegister.status == "success")
         {
-            dangKy.text = "??ng k˝ th‡nh cÙng! " + responseDataRegister.message;
+            dangKy.text = "??ng k√Ω th√†nh c√¥ng! " + responseDataRegister.message;
         }
         else
         {
-            dangKy.text = "??ng k˝ th?t b?i: " + responseDataRegister.message;
+            dangKy.text = "??ng k√Ω th?t b?i: " + responseDataRegister.message;
         }
     }
 
@@ -147,8 +147,7 @@ public class LoginWeb : Singleton<LoginWeb>
     }
     IEnumerator GetDataFromServer()
     {
-
-        using (UnityWebRequest www = UnityWebRequest.Get(rank))
+        using (UnityWebRequest www = UnityWebRequest.Get(rankURL))
         {
             yield return www.SendWebRequest();
 
@@ -167,18 +166,22 @@ public class LoginWeb : Singleton<LoginWeb>
 
                     if (gameDataWrapper != null && gameDataWrapper.items.Length > 0)
                     {
-                        string displayText = "";
-                        foreach (var data in gameDataWrapper.items)
+                        for (int i = 0; i < gameDataWrapper.items.Length; i++)
                         {
-                            displayText += "STT: " + data.Ranking + " - Character_Name: " + data.Character_Name +
-                                " - Played_Time: " + data.Played_Time + "\n";
-                            Rank.text += data.Ranking + "\n";
-                            Name.text += data.Character_Name + "\n";
-                            Time.text += data.Played_Time + "S\n";
+                            if (i < rows.Length)
+                            {
+                                var data = gameDataWrapper.items[i];
+                                TextMeshProUGUI[] texts = rows[i].GetComponentsInChildren<TextMeshProUGUI>();
+
+                                texts[0].text = data.Ranking.ToString();
+                                texts[1].text = data.Character_Name;
+                                texts[2].text = data.Played_Time + "S";
+                            }
                         }
                     }
                     else
                     {
+                        Debug.Log("No items found");
                     }
                 }
                 catch (System.Exception ex)
@@ -202,41 +205,11 @@ public class LoginWeb : Singleton<LoginWeb>
         public GameData[] items;
     }
 
-    public void LogGamePlay(DateTime startTime, DateTime endTime)
-    {
-        double playedTime = (endTime - startTime).TotalSeconds;
-        StartCoroutine(SendGamePlayData(startTime, endTime, playedTime));
-    }
-
-    private IEnumerator SendGamePlayData(DateTime startTime, DateTime endTime, double playedTime)
-    {
-        WWWForm form = new WWWForm();
-        form.AddField("Level_Id", 1);
-        form.AddField("Items_Id", 1);
-        form.AddField("User_Id", input.Instance.userid);
-        form.AddField("Start_Time", startTime.ToString("yyyy-MM-dd HH:mm:ss"));
-        form.AddField("Ens_Time", endTime.ToString("yyyy-MM-dd HH:mm:ss"));
-        form.AddField("Played_Time", playedTime.ToString());
-
-        using (UnityWebRequest www = UnityWebRequest.Post(SaveGameplay, form))
-        {
-            yield return www.SendWebRequest();
-
-            if (www.result != UnityWebRequest.Result.Success)
-            {
-                Debug.LogError(www.error);
-            }
-            else
-            {
-                Debug.Log("Form upload complete!");
-            }
-        }
-    }
 
     public ItemValue itemList;
     IEnumerator GetItems()
     {
-        UnityWebRequest www = UnityWebRequest.Get(GetItemValue);
+        UnityWebRequest www = UnityWebRequest.Get(GetItemValueURL);
         yield return www.SendWebRequest();
 
         if (www.result != UnityWebRequest.Result.Success)

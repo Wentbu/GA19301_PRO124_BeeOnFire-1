@@ -32377,7 +32377,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraTransform: {fileID: 1096849193}
-  moveSpeed: 5
+  moveSpeed: 6
   positionBR: 76.57
   smoothness: 1
 --- !u!1660057539 &9223372036854775807
