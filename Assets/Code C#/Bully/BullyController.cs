@@ -185,7 +185,6 @@ public class BullyController : MonoBehaviour
 
         Vector2 randomPoint = initialPosition + noiseDirection * patrolRadius;
 
-        // Sử dụng AstarPath.active.GetNearest() thay vì NavMesh.SamplePosition
         GraphNode node = AstarPath.active.GetNearest(randomPoint).node;
         if (node != null && node.Walkable)
         {
