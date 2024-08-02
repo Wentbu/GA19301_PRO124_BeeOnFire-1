@@ -13,12 +13,7 @@ public class Value : MonoBehaviour
     [SerializeField] private TMP_InputField passwordRegister;
     [SerializeField] private TMP_InputField passwordRegister2;
 
-    private DateTime star;
-    private DateTime end;
-    private void Start()
-    {
-        star = DateTime.Now;
-    }
+    public GamePlay dataGameplay;
 
     public void GetValueLogin()
     {
@@ -37,19 +32,18 @@ public class Value : MonoBehaviour
     }
     public void RegisterUser()
     {
-        LoginWeb.Instance.registerUser();
-        //if (input.Instance.GetPasword() == input.Instance.GetPassword2())
-        //{
-        //    Web.Instance.registerUser(input.Instance.GetUser(), input.Instance.GetPasword());
-        //}else
-        //{
-        //    Debug.Log("M?t kh?u không trùng kh?p");
-        //}
+        if (input.Instance.GetPasword() == input.Instance.GetPassword2())
+        {
+            LoginWeb.Instance.registerUser();
+        }
+        else
+        {
+            Debug.Log("M?t kh?u không trùng kh?p");
+        }
     }
     public void GamePlay()
     {
-        end = DateTime.Now;
-        LoginWeb.Instance.LogGamePlay(star, end);
+        GameManager.Instance.LogGamePlay(dataGameplay.starTime, dataGameplay.endTime);
     }
     public void GetData()
     {
