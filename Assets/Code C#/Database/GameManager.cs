@@ -8,6 +8,7 @@ public class GameManager : Singleton<GameManager>
 {
     private static readonly string SaveGameplayURL = "https://phamduchuan.name.vn/SaveGameTime.php";
 
+    [SerializeField] GamePlay gameplayData;
     public void LogGamePlay(DateTime startTime, DateTime endTime)
     {
         double playedTime = Math.Floor((endTime - startTime).TotalSeconds);
@@ -18,7 +19,7 @@ public class GameManager : Singleton<GameManager>
     {
         WWWForm form = new WWWForm();
         form.AddField("Levels_Id", 1);
-        form.AddField("User_Id", input.Instance.userid);
+        form.AddField("User_Id", gameplayData.userId);
         form.AddField("Start_Time", startTime.ToString("yyyy-MM-dd HH:mm:ss"));
         form.AddField("End_Time", endTime.ToString("yyyy-MM-dd HH:mm:ss"));
         form.AddField("Played_Time", playedTime.ToString());

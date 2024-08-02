@@ -1,32 +1,52 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
-public class input : Singleton<input>
+public class input : MonoBehaviour
 {
-    public string user;
-    public string password;
-    public string password2;
-    public int userid;
 
-    public string GetUser()
+
+    [SerializeField] private TMP_InputField userLogin;
+    [SerializeField] private TMP_InputField passwordLogin;
+    [SerializeField] private TMP_InputField userRegister;
+    [SerializeField] private TMP_InputField passwordRegister;
+    [SerializeField] private TMP_InputField passwordRegister2;
+
+    [SerializeField] private GamePlay dataGameplay;
+
+    public void GetValueLogin()
     {
-        return user;
+        if (userLogin.text.Trim().Length == 0) return;
+        Value.Instance.value(userLogin.text, passwordLogin.text, passwordRegister2.text);
+    }
+    public void GetValueRegister()
+    {
+        if (userRegister.text.Trim().Length == 0) return;
+        Value.Instance.value(userRegister.text, passwordRegister.text, passwordRegister2.text);
     }
 
-    public string GetPasword()
+    public void LogIn()
     {
-        return password;
+        LoginWeb.Instance.login();
     }
-
-    public string GetPassword2()
+    public void RegisterUser()
     {
-        return password2;
+        if (Value.Instance.GetPasword() == Value.Instance.GetPassword2())
+        {
+            LoginWeb.Instance.registerUser();
+        }
+        else
+        {
+            Debug.Log("M?t kh?u không trùng kh?p");
+        }
     }
-    public void value(string user, string password, string password2)
+    public void GamePlay()
     {
-        this.user = user;
-        this.password = password;
-        this.password2 = password2;
+        GameManager.Instance.LogGamePlay(dataGameplay.starTime, dataGameplay.endTime);
+    }
+    public void GetData()
+    {
+        LoginWeb.Instance.GetData();
     }
 }

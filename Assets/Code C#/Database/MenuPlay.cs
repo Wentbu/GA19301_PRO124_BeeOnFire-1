@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,19 +7,20 @@ using UnityEngine.UI;
 
 public class MenuPlay : MonoBehaviour
 {
-    public GamePlay gamePlayData;
-    public GameObject panelLogin;
-    public Button[] level;
-    public void GetLevel1()
+    [SerializeField] private GamePlay gamePlayData;
+    [SerializeField] private GameObject panelLogin;
+    [SerializeField] private Button[] level;
+    public void GetLevel()
     {
         gamePlayData.levelId = level.Length +1;
     }
 
     public void playGame()
     {
-        if (gamePlayData.login)
+        if (gamePlayData.login == true)
         {
             SceneManager.LoadScene(gamePlayData.levelId);
+            gamePlayData.starTime = DateTime.Now;
         }
         else
         {
