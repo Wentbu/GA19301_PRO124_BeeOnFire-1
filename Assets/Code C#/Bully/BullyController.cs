@@ -31,7 +31,6 @@ public class BullyController : MonoBehaviour
     [SerializeField] private float searchRadius = 10f;
     private float patrolTimer = 0f;
     [SerializeField] private float patrolDuration;
-    [SerializeField] private float waitTime = 1f;
     [SerializeField] private float patrolRadius;
 
     private void Awake()
@@ -84,12 +83,10 @@ public class BullyController : MonoBehaviour
         if (playerInSight)
         {
             MoveTowardsPlayer();
-
-            patrolTimer = 0f; // Reset bộ đếm thời gian khi thấy người chơi
+            patrolTimer = 0f;
         }
         else if (isPatrolling)
         {
-            StartCoroutine(WaitBeforePatrol());
             Patrol();
         }
         else
@@ -154,7 +151,7 @@ public class BullyController : MonoBehaviour
         animator.SetFloat("Horizontal", 0);
         animator.SetFloat("Vertical", 0);
         animator.SetFloat("Speed", 0);
-        animator.Play("BullyIdle"); // Chuyển sang trạng thái Idle bằng cách sử dụng tên animation
+        animator.Play("BullyIdle");
         playerInSight = false;
         isMoving = false;
         timeSinceLastSeenPlayer = 0f;
@@ -162,6 +159,7 @@ public class BullyController : MonoBehaviour
 
     private void UpdateAnimation()
     {
+        movement = agent.velocity;
         animator.SetFloat("Horizontal", movement.x);
         animator.SetFloat("Vertical", movement.y);
         animator.SetFloat("Speed", movement.sqrMagnitude);
@@ -169,8 +167,11 @@ public class BullyController : MonoBehaviour
 
     private Vector2 GenerateRandomPatrolPoint()
     {
-        Vector2 randomDirection = Random.insideUnitCircle * patrolRadius;
-        Vector2 randomPoint = initialPosition + randomDirection;
+        float noiseX = Mathf.PerlinNoise(noiseOffsetX, Time.time * 0.1f) * 2 - 1;
+        float noiseY = Mathf.PerlinNoise(noiseOffsetY, Time.time * 0.1f) * 2 - 1;
+        Vector2 noiseDirection = new Vector2(noiseX, noiseY).normalized;
+
+        Vector2 randomPoint = initialPosition + noiseDirection * patrolRadius;
         Vector3 randomPoint3D = new Vector3(randomPoint.x, randomPoint.y, 0);
         if (NavMesh.SamplePosition(randomPoint3D, out NavMeshHit hit, patrolRadius, NavMesh.AllAreas))
         {
@@ -186,19 +187,19 @@ public class BullyController : MonoBehaviour
         {
             if (path.status == NavMeshPathStatus.PathPartial)
             {
-                // Tìm điểm xa nhất có thể đi được
                 Vector2 furthestReachablePoint = path.corners[path.corners.Length - 1];
+                Vector2 direction = (furthestReachablePoint - (Vector2)transform.position).normalized;
 
-                // Tìm điểm gần nhất trên NavMesh
-                NavMeshHit hit;
-                if (NavMesh.SamplePosition(furthestReachablePoint, out hit, searchRadius, NavMesh.AllAreas))
+                // Sử dụng kỹ thuật ray casting để tìm điểm xa nhất có thể đi được
+                RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, searchRadius, WhatIsObstacles);
+                if (hit.collider != null)
                 {
-                    // Tìm đường đi mới từ điểm hiện tại đến điểm gần nhất trên NavMesh
-                    NavMeshPath newPath = new NavMeshPath();
-                    if (NavMesh.CalculatePath(transform.position, hit.position, NavMesh.AllAreas, newPath))
-                    {
-                        agent.SetPath(newPath);
-                    }
+                    Vector2 newTarget = hit.point - direction * 0.1f; // Lùi lại một chút để tránh va chạm
+                    agent.SetDestination(newTarget);
+                }
+                else
+                {
+                    agent.SetDestination(furthestReachablePoint);
                 }
             }
             else
@@ -206,10 +207,5 @@ public class BullyController : MonoBehaviour
                 agent.SetPath(path);
             }
         }
-    }
-
-    IEnumerator WaitBeforePatrol()
-    {
-        yield return new WaitForSeconds(waitTime);
     }
 }
