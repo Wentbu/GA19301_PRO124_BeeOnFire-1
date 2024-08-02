@@ -5,6 +5,143 @@ using UnityEngine;
 using UnityEngine.AI;
 using static BullyController;
 
+public class Node
+{
+    public Vector2 Position;
+    public Node Parent;
+    public float G, H, F;
+
+    public Node(Vector2 position)
+    {
+        Position = position;
+    }
+}
+
+public class AStar
+{
+    private const int MOVE_STRAIGHT_COST = 10;
+    private const int MOVE_DIAGONAL_COST = 14;
+
+    private List<Node> openList;
+    private List<Node> closedList;
+    private float cellSize;
+    private Vector2 gridSize;
+
+    public AStar(float cellSize, Vector2 gridSize)
+    {
+        this.cellSize = cellSize;
+        this.gridSize = gridSize;
+    }
+
+    public List<Vector2> FindPath(Vector2 startPos, Vector2 targetPos)
+    {
+        Node startNode = new Node(startPos);
+        Node targetNode = new Node(targetPos);
+
+        openList = new List<Node> { startNode };
+        closedList = new List<Node>();
+
+        startNode.G = 0;
+        startNode.H = CalculateDistanceCost(startNode, targetNode);
+        startNode.F = startNode.G + startNode.H;
+
+        while (openList.Count > 0)
+        {
+            Node currentNode = GetLowestFCostNode(openList);
+            if (currentNode.Position == targetNode.Position)
+            {
+                return CalculatePath(currentNode);
+            }
+
+            openList.Remove(currentNode);
+            closedList.Add(currentNode);
+
+            foreach (Node neighbourNode in GetNeighbourList(currentNode))
+            {
+                if (closedList.Contains(neighbourNode)) continue;
+
+                float tentativeGCost = currentNode.G + CalculateDistanceCost(currentNode, neighbourNode);
+                if (tentativeGCost < neighbourNode.G)
+                {
+                    neighbourNode.Parent = currentNode;
+                    neighbourNode.G = tentativeGCost;
+                    neighbourNode.H = CalculateDistanceCost(neighbourNode, targetNode);
+                    neighbourNode.F = neighbourNode.G + neighbourNode.H;
+
+                    if (!openList.Contains(neighbourNode))
+                    {
+                        openList.Add(neighbourNode);
+                    }
+                }
+            }
+        }
+
+        return null;
+    }
+
+    private List<Node> GetNeighbourList(Node currentNode)
+    {
+        List<Node> neighbourList = new List<Node>();
+
+        for (int x = -1; x <= 1; x++)
+        {
+            for (int y = -1; y <= 1; y++)
+            {
+                if (x == 0 && y == 0) continue;
+
+                Vector2 neighbourPos = new Vector2(
+                    currentNode.Position.x + x * cellSize,
+                    currentNode.Position.y + y * cellSize
+                );
+
+                if (neighbourPos.x >= 0 && neighbourPos.x < gridSize.x &&
+                    neighbourPos.y >= 0 && neighbourPos.y < gridSize.y)
+                {
+                    neighbourList.Add(new Node(neighbourPos));
+                }
+            }
+        }
+
+        return neighbourList;
+    }
+
+    private List<Vector2> CalculatePath(Node endNode)
+    {
+        List<Vector2> path = new List<Vector2>();
+        Node currentNode = endNode;
+
+        while (currentNode != null)
+        {
+            path.Add(currentNode.Position);
+            currentNode = currentNode.Parent;
+        }
+
+        path.Reverse();
+        return path;
+    }
+
+    private float CalculateDistanceCost(Node a, Node b)
+    {
+        float xDistance = Mathf.Abs(a.Position.x - b.Position.x);
+        float yDistance = Mathf.Abs(a.Position.y - b.Position.y);
+        float remaining = Mathf.Abs(xDistance - yDistance);
+        return MOVE_DIAGONAL_COST * Mathf.Min(xDistance, yDistance) + MOVE_STRAIGHT_COST * remaining;
+    }
+
+    private Node GetLowestFCostNode(List<Node> nodeList)
+    {
+        Node lowestFCostNode = nodeList[0];
+        for (int i = 1; i < nodeList.Count; i++)
+        {
+            if (nodeList[i].F < lowestFCostNode.F)
+            {
+                lowestFCostNode = nodeList[i];
+            }
+        }
+        return lowestFCostNode;
+    }
+}
+
 public class BullyController : MonoBehaviour
 {
     private NavMeshAgent agent;
@@ -13,49 +150,51 @@ public class BullyController : MonoBehaviour
     [SerializeField] private Vector2 movement;
     [SerializeField] Rigidbody2D rb2d;
     [SerializeField] private LayerMask WhatIsObstacles;
-    [SerializeField] private float Distance; // Khoảng cách hiện tại giữa Bully và người chơi
-    [SerializeField] private float DistanceToPlayer; // Ngưỡng khoảng cách để Bully bắt đầu đi theo người chơi
-    [SerializeField] private float MaxDistance; // Khoảng cách tối đa Bully có thể đi
-
+    [SerializeField] private float Distance;
+    [SerializeField] private float DistanceToPlayer;
+    [SerializeField] private float MaxDistance;
     [SerializeField] private Transform player;
+    [SerializeField] private float searchRadius = 10f;
+    [SerializeField] private float patrolDuration;
+    [SerializeField] private float patrolRadius;
+    [SerializeField] private float moveSpeed = 5f;
+
     private Vector2 initialPosition;
     private Vector2 lastKnownPosition;
     private float timeSinceLastSeenPlayer = 0f;
     private bool playerInSight = false;
-    private bool isMoving = false; // Biến kiểm soát trạng thái di chuyển của Bully
+    private bool isMoving = false;
     private bool isPatrolling = false;
     private float patrolStartTime;
     private Vector2 currentPatrolTarget;
     private float noiseOffsetX;
     private float noiseOffsetY;
-    [SerializeField] private float searchRadius = 10f;
     private float patrolTimer = 0f;
-    [SerializeField] private float patrolDuration;
-    [SerializeField] private float patrolRadius;
+
+    private AStar pathfinder;
+    private List<Vector2> currentPath;
+    private int currentPathIndex;
 
     private void Awake()
     {
-        agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         rb2d = GetComponent<Rigidbody2D>();
     }
-    // Start is called before the first frame update
+
     void Start()
     {
-        agent.updateRotation = false;
-        agent.updateUpAxis = false;
         initialPosition = transform.position;
         noiseOffsetX = Random.value * 1000f;
         noiseOffsetY = Random.value * 1000f;
+        pathfinder = new AStar(1f, new Vector2(100, 100)); // Adjust grid size as needed
     }
 
-    // Update is called once per frame
     void Update()
     {
         bool isPlayerHidden = IsPlayerHidden();
         Distance = Vector2.Distance(transform.position, player.transform.position);
 
-        if (Distance < DistanceToPlayer && Distance <= MaxDistance && isPlayerHidden == false)
+        if (Distance < DistanceToPlayer && Distance <= MaxDistance && !isPlayerHidden)
         {
             playerInSight = true;
             lastKnownPosition = player.transform.position;
@@ -93,42 +232,64 @@ public class BullyController : MonoBehaviour
         {
             ReturnToInitialPosition();
         }
+
+        MoveAlongPath();
     }
 
     private void MoveTowardsPlayer()
     {
-        agent.SetDestination(player.position);
-        FindBetterPath(player.position);
-        movement = agent.velocity;
-        UpdateAnimation();
+        SetNewPath(player.position);
         isMoving = true;
     }
 
     private void Patrol()
     {
-        if (agent.remainingDistance <= agent.stoppingDistance)
+        if (currentPath == null || currentPathIndex >= currentPath.Count)
         {
             currentPatrolTarget = GenerateRandomPatrolPoint();
-            agent.SetDestination(currentPatrolTarget);
+            SetNewPath(currentPatrolTarget);
         }
-        movement = agent.velocity;
-        UpdateAnimation();
     }
 
     private void ReturnToInitialPosition()
     {
         if (Vector2.Distance(transform.position, initialPosition) > 0.01f)
         {
-            agent.SetDestination(initialPosition);
-            FindBetterPath(player.position);
-            movement = agent.velocity;
-            UpdateAnimation();
+            SetNewPath(initialPosition);
             isMoving = true;
         }
         else
         {
-            // Reset lại trạng thái khi Bully quay về vị trí ban đầu
             ResetBully();
+        }
+    }
+
+    private void SetNewPath(Vector2 target)
+    {
+        currentPath = pathfinder.FindPath(transform.position, target);
+        currentPathIndex = 0;
+    }
+
+    private void MoveAlongPath()
+    {
+        if (currentPath != null && currentPathIndex < currentPath.Count)
+        {
+            Vector2 targetPosition = currentPath[currentPathIndex];
+            Vector2 moveDirection = (targetPosition - (Vector2)transform.position).normalized;
+            rb2d.MovePosition(rb2d.position + moveDirection * moveSpeed * Time.fixedDeltaTime);
+
+            if (Vector2.Distance(transform.position, targetPosition) < 0.1f)
+            {
+                currentPathIndex++;
+            }
+
+            movement = moveDirection;
+            UpdateAnimation();
+        }
+        else
+        {
+            movement = Vector2.zero;
+            UpdateAnimation();
         }
     }
 
