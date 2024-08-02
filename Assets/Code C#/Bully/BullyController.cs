@@ -13,18 +13,27 @@ public class BullyController : MonoBehaviour
     [SerializeField] Animator animator;
     [SerializeField] private Vector2 movement;
     [SerializeField] Rigidbody2D rb2d;
+    [SerializeField] private float avoidanceRadius = 1f;
     [SerializeField] private LayerMask WhatIsObstacles;
     [SerializeField] private float Distance;
     [SerializeField] private float DistanceToPlayer;
     [SerializeField] private float MaxDistance;
     [SerializeField] private Transform player;
+    [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float searchRadius = 10f;
     [SerializeField] private float patrolDuration;
     [SerializeField] private float patrolRadius;
-    [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private float fieldOfView = 90f;
+    [SerializeField] private float viewDistance = 10f;
+    [SerializeField] private float maxSearchTime = 10f;
+    [SerializeField] private Vector2[] patrolPoints;
+    [SerializeField] private float predictionTime = 1f;
 
+    private int currentPatrolIndex = 0;
     private Vector2 initialPosition;
-    private Vector2 lastKnownPosition;
+    private Vector2 lastKnownPlayerPosition;
+    private bool isSearching = false;
+    private float searchTime = 0f;
     private float timeSinceLastSeenPlayer = 0f;
     private bool playerInSight = false;
     private bool isMoving = false;
@@ -56,15 +65,16 @@ public class BullyController : MonoBehaviour
 
     void Update()
     {
-        bool isPlayerHidden = IsPlayerHidden();
-        Distance = Vector2.Distance(transform.position, player.transform.position);
+        bool canSeePlayer = CanSeePlayer();
 
-        if (Distance < DistanceToPlayer && Distance <= MaxDistance && !isPlayerHidden)
+        if (canSeePlayer)
         {
             playerInSight = true;
-            lastKnownPosition = player.transform.position;
+            lastKnownPlayerPosition = player.position;
             timeSinceLastSeenPlayer = 0f;
             isPatrolling = false;
+            isSearching = false;
+            MoveTowardsPredictedPosition();
         }
         else
         {
@@ -73,34 +83,43 @@ public class BullyController : MonoBehaviour
             if (timeSinceLastSeenPlayer > patrolDuration)
             {
                 playerInSight = false;
-                isPatrolling = false;
+                isPatrolling = true;
+                isSearching = false;
             }
             else if (playerInSight)
             {
-                playerInSight = false;
-                isPatrolling = true;
-                patrolStartTime = Time.time;
-                timeSinceLastSeenPlayer = 0f;
+                SearchForPlayer();
             }
         }
 
-        if (playerInSight)
-        {
-            MoveTowardsPlayer();
-            patrolTimer = 0f;
-        }
-        else if (isPatrolling)
+        if (isPatrolling)
         {
             Patrol();
         }
-        else
+        else if (!playerInSight && !isSearching)
         {
             ReturnToInitialPosition();
         }
 
-        // Cập nhật movement dựa trên aiPath
-        movement = aiPath.desiredVelocity;
+        movement = AvoidObstacles(movement);
+
+        rb2d.velocity = movement * moveSpeed;
         UpdateAnimation();
+    }
+
+    private bool CanSeePlayer()
+    {
+        if (Vector2.Distance(transform.position, player.position) > viewDistance)
+            return false;
+
+        Vector2 directionToPlayer = (player.position - transform.position).normalized;
+        float angle = Vector2.Angle(transform.right, directionToPlayer);
+
+        if (angle > fieldOfView / 2f)
+            return false;
+
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, directionToPlayer, viewDistance, WhatIsObstacles);
+        return hit.collider == null || hit.collider.CompareTag("Player");
     }
 
     private void MoveTowardsPlayer()
@@ -123,8 +142,9 @@ public class BullyController : MonoBehaviour
     {
         if (aiPath.reachedEndOfPath)
         {
-            currentPatrolTarget = GenerateRandomPatrolPoint();
-            seeker.StartPath(transform.position, currentPatrolTarget, OnPathComplete);
+            currentPatrolIndex = (currentPatrolIndex + 1) % patrolPoints.Length;
+            Vector2 nextPatrolPoint = patrolPoints[currentPatrolIndex];
+            seeker.StartPath(transform.position, nextPatrolPoint, OnPathComplete);
         }
         movement = aiPath.desiredVelocity;
         UpdateAnimation();
@@ -145,13 +165,62 @@ public class BullyController : MonoBehaviour
         }
     }
 
-    private bool IsPlayerHidden()
+    private void SearchForPlayer()
     {
-        // Kiểm tra xem người chơi có nằm sau vật thể hay không bằng cách sử dụng Raycast
-        RaycastHit2D hits = Physics2D.Linecast(transform.position, player.transform.position, WhatIsObstacles);
+        if (!isSearching)
+        {
+            isSearching = true;
+            searchTime = 0f;
+            StartCoroutine(SearchCoroutine());
+        }
+    }
 
-        // Nếu Raycast không va chạm với vật thể nào, tức là người chơi không bị che giấu
-        return hits.collider != null;
+    private IEnumerator SearchCoroutine()
+    {
+        while (searchTime < maxSearchTime)
+        {
+            Vector2 searchPoint = lastKnownPlayerPosition + Random.insideUnitCircle * 5f;
+            seeker.StartPath(transform.position, searchPoint, OnPathComplete);
+            yield return new WaitForSeconds(2f);
+            searchTime += 2f;
+
+            if (CanSeePlayer())
+            {
+                isSearching = false;
+                yield break;
+            }
+        }
+        isSearching = false;
+    }
+
+    private Vector2 PredictPlayerPosition()
+    {
+        Vector2 playerVelocity = player.GetComponent<Rigidbody2D>().velocity;
+        return (Vector2)player.position + playerVelocity * predictionTime;
+    }
+
+    private void MoveTowardsPredictedPosition()
+    {
+        Vector2 predictedPosition = PredictPlayerPosition();
+        seeker.StartPath(transform.position, predictedPosition, OnPathComplete);
+        movement = aiPath.desiredVelocity;
+        UpdateAnimation();
+        isMoving = true;
+    }
+
+    private Vector2 AvoidObstacles(Vector2 currentMovement)
+    {
+        Collider2D[] obstacles = Physics2D.OverlapCircleAll(transform.position, avoidanceRadius, WhatIsObstacles);
+        Vector2 avoidanceForce = Vector2.zero;
+
+        foreach (Collider2D obstacle in obstacles)
+        {
+            Vector2 directionToObstacle = obstacle.transform.position - transform.position;
+            float distance = directionToObstacle.magnitude;
+            avoidanceForce += -directionToObstacle.normalized * (avoidanceRadius / distance);
+        }
+
+        return (currentMovement + avoidanceForce).normalized;
     }
 
     private void ResetBully()
