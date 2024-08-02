@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 using Pathfinding;
@@ -10,7 +9,6 @@ public class BullyController : MonoBehaviour
 {
     private Seeker seeker;
     private AIPath aiPath;
-    private NavMeshAgent agent;
 
     [SerializeField] Animator animator;
     [SerializeField] private Vector2 movement;
