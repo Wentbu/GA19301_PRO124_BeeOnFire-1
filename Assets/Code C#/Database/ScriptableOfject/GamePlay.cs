@@ -6,6 +6,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "GamePlay", menuName ="DataGameplay")]
 public class GamePlay : ScriptableObject
 {
+    public string UserName;
+    public string PassWord;
+
     public int levelId;
     public int userId;
     public DateTime starTime;

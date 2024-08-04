@@ -15,3 +15,4 @@ MonoBehaviour:
   levelId: 0
   userId: 0
   playedTime: 0
+  login: 0
