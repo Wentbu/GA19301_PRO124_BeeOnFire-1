@@ -1,12 +1,10 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class input : MonoBehaviour
+public class inputLogin : MonoBehaviour
 {
-
-
     [SerializeField] private TMP_InputField userLogin;
     [SerializeField] private TMP_InputField passwordLogin;
     [SerializeField] private TMP_InputField userRegister;
@@ -38,15 +36,7 @@ public class input : MonoBehaviour
         }
         else
         {
-            Debug.Log("M?t kh?u kh�ng tr�ng kh?p");
+            LoginWeb.Instance.registerStatus.text = "Mật khẩu không trùng khớp";
         }
-    }
-    public void GamePlay()
-    {
-        GameManager.Instance.LogGamePlay(dataGameplay.starTime, dataGameplay.endTime);
-    }
-    public void GetData()
-    {
-        LoginWeb.Instance.GetData();
     }
 }

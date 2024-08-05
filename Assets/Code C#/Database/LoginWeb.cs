@@ -15,8 +15,8 @@ public class LoginWeb : Singleton<LoginWeb>
     [SerializeField] TextMeshProUGUI Name;
     [SerializeField] TextMeshProUGUI Time;
 
-    [SerializeField] TextMeshProUGUI dangNhap;
-    [SerializeField] TextMeshProUGUI dangKy;
+    [SerializeField] TextMeshProUGUI loginStatus;
+    [SerializeField] public TextMeshProUGUI registerStatus;
 
     private static readonly string LoginURL = "https://phamduchuan.name.vn/LogIn.php";
     private static readonly string RegisterURL = "https://phamduchuan.name.vn/RegisterUser.php";
@@ -32,7 +32,7 @@ public class LoginWeb : Singleton<LoginWeb>
 
     public void login()
     {
-        dangNhap.text = string.Empty;
+        loginStatus.text = string.Empty;
         StartCoroutine(LogInCoroutine());
     }
     IEnumerator LogInCoroutine()
@@ -47,7 +47,7 @@ public class LoginWeb : Singleton<LoginWeb>
 
             if (www.result != UnityWebRequest.Result.Success)
             {
-                dangNhap.text = "Lỗi mạng: " + www.error;
+                loginStatus.text = "Lỗi mạng: " + www.error;
             }
             else
             {
@@ -67,13 +67,14 @@ public class LoginWeb : Singleton<LoginWeb>
 
         if (responseData.status == "success")
         {
-            dangNhap.text = "Đăng nhập thành công!";
+            loginStatus.text = "Đăng nhập thành công!";
             gameplayData.userId = responseData.User_Id;
-            // Th?c hi?n các logic game khi ??ng nh?p thành công
+            gameplayData.UserName = Value.Instance.GetUser();
+            gameplayData.PassWord = Value.Instance.GetPasword();
         }
         else
         {
-            dangNhap.text = "Đăng nhập thất bại: " + responseData.message;
+            loginStatus.text = "Đăng nhập thất bại: " + responseData.message;
         }
     }
 
@@ -88,7 +89,7 @@ public class LoginWeb : Singleton<LoginWeb>
 
     public void registerUser()
     {
-        dangKy.text = string.Empty;
+        registerStatus.text = string.Empty;
         StartCoroutine(RegisterUser());
     }
 
@@ -104,7 +105,7 @@ public class LoginWeb : Singleton<LoginWeb>
 
             if (www.result != UnityWebRequest.Result.Success)
             {
-                dangKy.text = "Lỗi mạng: " + www.error;
+                registerStatus.text = "Lỗi mạng: " + www.error;
             }
             else
             {
@@ -123,11 +124,11 @@ public class LoginWeb : Singleton<LoginWeb>
 
         if (responseDataRegister.status == "success")
         {
-            dangKy.text = "Đăng ký thành công! " + responseDataRegister.message;
+            registerStatus.text = "Đăng ký thành công! " + responseDataRegister.message;
         }
         else
         {
-            dangKy.text = "Đăng ký thất bai: " + responseDataRegister.message;
+            registerStatus.text = "Đăng ký thất bai: " + responseDataRegister.message;
         }
     }
 
@@ -176,7 +177,10 @@ public class LoginWeb : Singleton<LoginWeb>
 
                                 texts[0].text = data.Ranking.ToString();
                                 texts[1].text = data.Character_Name.ToString();
-                                texts[2].text = data.Played_Time + "S";
+                                int totalSeconds = int.Parse(data.Played_Time);
+                                int minutes = Mathf.FloorToInt(totalSeconds / 60);
+                                int seconds = totalSeconds % 60;
+                                texts[2].text = string.Format("{0:00}:{1:00}", minutes, seconds);
                             }
                         }
                     }
@@ -205,7 +209,7 @@ public class LoginWeb : Singleton<LoginWeb>
     {
         public GameData[] items;
     }
-
+    
 
     public ItemValue itemList;
     IEnumerator GetItems()
