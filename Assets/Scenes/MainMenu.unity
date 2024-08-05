@@ -3580,7 +3580,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraTransform: {fileID: 1096849193}
-  moveSpeed: 7
+  moveSpeed: 4.5
   positionRingt: 73.5
   positionLeft: -73.2
   smoothness: 1
@@ -3779,7 +3779,7 @@ Transform:
   m_GameObject: {fileID: 1237892854}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 9.2378, y: -5.07, z: 0}
+  m_LocalPosition: {x: 9.2378, y: -6.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3852,7 +3852,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraTransform: {fileID: 1096849193}
-  moveSpeed: 5
+  moveSpeed: 6
   positionRingt: 76.62325
   positionLeft: -75.03012
   smoothness: 1
@@ -5140,7 +5140,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraTransform: {fileID: 1096849193}
-  moveSpeed: 6
+  moveSpeed: 6.5
   positionRingt: 77.8
   positionLeft: -78.4
   smoothness: 1
@@ -5244,7 +5244,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraTransform: {fileID: 1096849193}
-  moveSpeed: 6
+  moveSpeed: 5
   positionRingt: 78.22714
   positionLeft: -76.60065
   smoothness: 1
