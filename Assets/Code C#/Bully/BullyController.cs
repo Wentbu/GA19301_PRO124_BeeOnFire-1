@@ -21,7 +21,7 @@ public class BullyController : MonoBehaviour
     [Header("Player")]
     [SerializeField] private Transform player;
 
-    [Header("Behaviour")]
+    [Header("BullyBehaviour")]
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float searchRadius = 10f;
     [SerializeField] private float patrolDuration;
@@ -72,7 +72,7 @@ public class BullyController : MonoBehaviour
         InitializePatrolSystem();
     }
 
-    void Update()
+    private void FixedUpdate()
     {
         UpdateState();
         ExecuteCurrentState();
@@ -125,7 +125,7 @@ public class BullyController : MonoBehaviour
                     currentState = BullyState.Chasing;
                     patrolTimer = 0f;
                 }
-                else if (patrolTimer >= patrolDuration)
+                else if (patrolTimer > patrolDuration && aiPath.reachedEndOfPath)
                 {
                     currentState = BullyState.ReturningToStart;
                     patrolTimer = 0f;
@@ -147,16 +147,16 @@ public class BullyController : MonoBehaviour
         switch (currentState)
         {
             case BullyState.Idle:
-                ResetBully();
+                SetIdleState();
                 break;
             case BullyState.Chasing:
                 MoveTowardsPredictedPosition();
                 break;
-            case BullyState.Patrolling:
-                Patrol();
-                break;
             case BullyState.Searching:
                 SearchForPlayer();
+                break;
+            case BullyState.Patrolling:
+                Patrol();
                 break;
             case BullyState.ReturningToStart:
                 ReturnToInitialPosition();
@@ -189,6 +189,12 @@ public class BullyController : MonoBehaviour
         return false;
     }
 
+    private void SetIdleState()
+    {
+        currentState = BullyState.Idle;
+        movement = Vector2.zero;
+        UpdateAnimation();
+    }
 
     private void MoveTowardsPredictedPosition()
     {
@@ -234,7 +240,6 @@ public class BullyController : MonoBehaviour
             seeker.StartPath(transform.position, nextPatrolPoint, OnPathComplete);
             currentPatrolIndex = nextPatrolIndex;
         }
-
         movement = aiPath.desiredVelocity;
         UpdateAnimation();
     }
@@ -278,12 +283,10 @@ public class BullyController : MonoBehaviour
         if (distanceToInitialPosition > 0.1f)
         {
             // Di chuyển NPC về vị trí ban đầu
-            Vector2 direction = (initialPosition - currentPosition).normalized;
-            Vector2 newPosition = Vector2.MoveTowards(currentPosition, initialPosition, moveSpeed * Time.deltaTime);
-            transform.position = newPosition;
+            seeker.StartPath(transform.position, initialPosition, OnPathComplete);
 
             // Cập nhật animation di chuyển
-            movement = direction;
+            movement = aiPath.desiredVelocity;
             UpdateAnimation();
         }
         else
