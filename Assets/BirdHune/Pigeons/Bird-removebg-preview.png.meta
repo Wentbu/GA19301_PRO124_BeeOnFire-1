@@ -1,0 +1,415 @@
+fileFormatVersion: 2
+guid: 74ee2967033f0ac4c9e17207c0e5e839
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 32
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Bird-removebg-preview_0
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 204
+        width: 90
+        height: 83
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c4626acdd099c3a4192c642335720dde
+      internalID: -916956593
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bird-removebg-preview_1
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 204
+        width: 90
+        height: 77
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ac201b44c226e7f4c8cadf5210831302
+      internalID: 660213587
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bird-removebg-preview_11
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 102
+        width: 102
+        height: 77
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b616bb2b0104a8b4fbb44346ef017c0f
+      internalID: 440677026
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bird-removebg-preview_12
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 102
+        width: 102
+        height: 73
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8c57f76c6cf009e4480a4d8a3e86b31f
+      internalID: -1475637367
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bird-removebg-preview_13
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 96
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a2a996181b65201428704c20c4986d24
+      internalID: 850343229
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bird-removebg-preview_14
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 0
+        width: 96
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3fc8de8e7b25ad74cabef52698034677
+      internalID: -588735915
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bird-removebg-preview_15
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 0
+        width: 96
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 59a7564ca1fb9df419cf034243f02a2b
+      internalID: -1533209806
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bird-removebg-preview_22
+      rect:
+        serializedVersion: 2
+        x: 204
+        y: 120
+        width: 102
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 72fec75a04543e040bfab9ff0502a6df
+      internalID: -2029257901
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bird-removebg-preview_23
+      rect:
+        serializedVersion: 2
+        x: 306
+        y: 119
+        width: 102
+        height: 67
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 88ebb76c9af2a7a4cbffd3a4fa3ac2c6
+      internalID: 959134866
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bird-removebg-preview_24
+      rect:
+        serializedVersion: 2
+        x: 408
+        y: 119
+        width: 103
+        height: 81
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2a47a04e0ea048241be405410c87cc34
+      internalID: 939392263
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bird-removebg-preview_25
+      rect:
+        serializedVersion: 2
+        x: 511
+        y: 126
+        width: 101
+        height: 67
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5d7f0cdd6d6b592459ed1e5616011a8c
+      internalID: 1622908183
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bird-removebg-preview_26
+      rect:
+        serializedVersion: 2
+        x: 612
+        y: 126
+        width: 102
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c3763610d98c90442990cd2cc25f6535
+      internalID: -940840273
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bird-removebg-preview_27
+      rect:
+        serializedVersion: 2
+        x: 714
+        y: 108
+        width: 102
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2e97a10b36fa2e546b09859bb2f8fe58
+      internalID: -1720716420
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      Bird-removebg-preview_0: -916956593
+      Bird-removebg-preview_1: 660213587
+      Bird-removebg-preview_10: -752236944
+      Bird-removebg-preview_11: 440677026
+      Bird-removebg-preview_12: -1475637367
+      Bird-removebg-preview_13: 850343229
+      Bird-removebg-preview_14: -588735915
+      Bird-removebg-preview_15: -1533209806
+      Bird-removebg-preview_16: 1294428968
+      Bird-removebg-preview_17: -1491164572
+      Bird-removebg-preview_18: 79124262
+      Bird-removebg-preview_19: -684101711
+      Bird-removebg-preview_2: -8534827
+      Bird-removebg-preview_20: 1709347517
+      Bird-removebg-preview_21: 328517617
+      Bird-removebg-preview_22: -2029257901
+      Bird-removebg-preview_23: 959134866
+      Bird-removebg-preview_24: 939392263
+      Bird-removebg-preview_25: 1622908183
+      Bird-removebg-preview_26: -940840273
+      Bird-removebg-preview_27: -1720716420
+      Bird-removebg-preview_3: -1675002664
+      Bird-removebg-preview_4: -563401964
+      Bird-removebg-preview_5: -1620341927
+      Bird-removebg-preview_6: -13985638
+      Bird-removebg-preview_7: -1048548656
+      Bird-removebg-preview_8: 776594682
+      Bird-removebg-preview_9: -199778183
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
