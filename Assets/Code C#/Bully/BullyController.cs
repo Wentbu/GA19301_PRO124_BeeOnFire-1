@@ -1,8 +1,21 @@
-﻿using System.Collections;
+﻿using Unity.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
 using System.Linq;
+using Unity.Jobs;
+
+public struct CalculateDistancesJob : IJobParallelFor
+{
+    [ReadOnly] public NativeArray<Vector2> points;
+    [ReadOnly] public Vector2 center;
+    [WriteOnly] public NativeArray<float> distances;
+
+    public void Execute(int index)
+    {
+        distances[index] = Vector2.SqrMagnitude(points[index] - center);
+    }
+}
 
 public class BullyController : MonoBehaviour
 {
@@ -22,17 +35,30 @@ public class BullyController : MonoBehaviour
     [SerializeField] private Transform player;
 
     [Header("BullyBehaviour")]
+    [Header("BullySpeed")]
     [SerializeField] private float moveSpeed = 5f;
-    [SerializeField] private float searchRadius = 10f;
-    [SerializeField] private float patrolDuration;
-    [SerializeField] private float patrolRadius;
-    [SerializeField] private float distance;
+
+    [Header("BullyChasePlayer")]
+    [SerializeField] private float distance; //Khoảng cách giữa Bully và người chơi
     [SerializeField] private float distanceToPlayer; // Ngưỡng khoảng cách để Bully bắt đầu đi theo người chơi
     [SerializeField] private float maxDistance; // Khoảng cách tối đa Bully có thể đi
-    [SerializeField] private float maxSearchTime = 10f;
     [SerializeField] private float maxChaseTime = 5f;
-    [SerializeField] private float randomnessFactor = 0.2f;
     [SerializeField] private float predictionTime = 1f;
+
+    [Header("BullySearch")]
+    [SerializeField] private float maxSearchTime = 30f;
+    [SerializeField] private float searchInterval = 1f; // Tìm kiếm mỗi giây
+    [SerializeField] private float searchRadius = 10f;
+    [SerializeField] private int randomPoints = 5;
+    [SerializeField] private int spiralPoints = 10;
+
+    [Header("BullyPatrol")]
+    [SerializeField] private float patrolDuration;
+    [SerializeField] private float patrolRadius;
+    [SerializeField] private float randomnessFactor = 0.2f;
+
+    [Header("BullyState")]
+    [SerializeField] private BullyState currentState = BullyState.Idle;
 
     private Vector2[] patrolPoints;
     private float[,] transitionMatrix;
@@ -55,7 +81,6 @@ public class BullyController : MonoBehaviour
         ReturningToStart
     }
 
-    [SerializeField] private BullyState currentState = BullyState.Idle;
 
     private void Awake()
     {
@@ -69,6 +94,7 @@ public class BullyController : MonoBehaviour
     {
         aiPath.enableRotation = false;
         initialPosition = transform.position;
+        InitializeSearchPoints();
         InitializePatrolSystem();
     }
 
@@ -111,10 +137,9 @@ public class BullyController : MonoBehaviour
                     currentState = BullyState.Chasing;
                     searchTime = 0f;
                 }
-                else if (searchTime >= maxSearchTime)
+                else if (searchTime >= maxSearchTime && !CanSeePlayer())
                 {
                     currentState = BullyState.Patrolling;
-                    patrolTimer = 0f;
                 }
                 break;
 
@@ -295,6 +320,12 @@ public class BullyController : MonoBehaviour
         }
     }
 
+    private void InitializeSearchPoints()
+    {
+        searchPoints.Clear();
+        GenerateSearchPoints();
+    }
+
     private void SearchForPlayer()
     {
         searchTime += Time.deltaTime;
@@ -302,14 +333,8 @@ public class BullyController : MonoBehaviour
 
         if (searchTime <= maxSearchTime)
         {
-            // Tạo các điểm tìm kiếm nếu chưa có
-            if (searchPoints.Count == 0)
-            {
-                GenerateSearchPoints();
-            }
-
             // Tìm kiếm theo khoảng thời gian
-            if (timeSinceLastSearch >= 1f) // Tìm kiếm mỗi giây
+            if (timeSinceLastSearch >= searchInterval)
             {
                 Vector2 nextSearchPoint = GetNextSearchPoint();
                 seeker.StartPath(transform.position, nextSearchPoint, OnPathComplete);
@@ -317,59 +342,73 @@ public class BullyController : MonoBehaviour
                 timeSinceLastSearch = 0f;
             }
         }
-        else
-        {
-            // Chuyển đổi trạng thái mượt mà
-            StartCoroutine(TransitionToPatrolling());
-        }
+        UpdateAnimation();
     }
 
     private void GenerateSearchPoints()
     {
         // Tạo điểm tìm kiếm theo mô hình xoắn ốc
-        int numPoints = 10;
-        float angleStep = 2f * Mathf.PI / numPoints;
-        for (int i = 0; i < numPoints; i++)
+        float angleStep = 2f * Mathf.PI / spiralPoints;
+        for (int i = 0; i < spiralPoints; i++)
         {
             float angle = i * angleStep;
-            float radius = Mathf.Lerp(0, searchRadius, (float)i / numPoints);
+            float radius = Mathf.Lerp(0, searchRadius, (float)i / spiralPoints);
             Vector2 offset = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * radius;
-            searchPoints.Add(lastKnownPlayerPosition + offset);
+            searchPoints.Add(offset);
         }
 
-        // Thêm một số điểm ngẫu nhiên
-        for (int i = 0; i < 5; i++)
+        // Thêm các điểm ngẫu nhiên
+        for (int i = 0; i < randomPoints; i++)
         {
-            searchPoints.Add(lastKnownPlayerPosition + Random.insideUnitCircle * searchRadius);
+            searchPoints.Add(Random.insideUnitCircle * searchRadius);
         }
 
-        // Sắp xếp các điểm theo khoảng cách tăng dần
-        searchPoints.Sort((a, b) => Vector2.Distance(transform.position, a).CompareTo(Vector2.Distance(transform.position, b)));
+        // Sử dụng Job System để sắp xếp các điểm (nếu có nhiều điểm)
+        SortSearchPointsJob();
     }
 
     private Vector2 GetNextSearchPoint()
     {
-        Vector2 nextPoint = searchPoints[currentSearchIndex];
+        Vector2 nextPoint = lastKnownPlayerPosition + searchPoints[currentSearchIndex];
         currentSearchIndex = (currentSearchIndex + 1) % searchPoints.Count;
         return nextPoint;
     }
 
-    private IEnumerator TransitionToPatrolling()
+    private void SortSearchPointsJob()
     {
-        float transitionDuration = 1f;
-        float elapsedTime = 0f;
+        NativeArray<Vector2> nativePoints = new NativeArray<Vector2>(searchPoints.ToArray(), Allocator.TempJob);
+        NativeArray<float> distances = new NativeArray<float>(searchPoints.Count, Allocator.TempJob);
 
-        while (elapsedTime < transitionDuration)
+        CalculateDistancesJob job = new CalculateDistancesJob
         {
-            // Giảm dần tốc độ
-            aiPath.maxSpeed = Mathf.Lerp(moveSpeed, 0, elapsedTime / transitionDuration);
-            elapsedTime += Time.deltaTime;
-            yield return null;
+            points = nativePoints,
+            center = transform.position,
+            distances = distances
+        };
+
+        JobHandle jobHandle = job.Schedule(searchPoints.Count, 64);
+        jobHandle.Complete();
+
+        // Sắp xếp các điểm dựa trên khoảng cách
+        List<KeyValuePair<int, float>> indexDistancePairs = new List<KeyValuePair<int, float>>();
+        for (int i = 0; i < distances.Length; i++)
+        {
+            indexDistancePairs.Add(new KeyValuePair<int, float>(i, distances[i]));
+        }
+        indexDistancePairs.Sort((a, b) => a.Value.CompareTo(b.Value));
+
+        List<Vector2> sortedPoints = new List<Vector2>();
+        foreach (var pair in indexDistancePairs)
+        {
+            sortedPoints.Add(searchPoints[pair.Key]);
         }
 
-        currentState = BullyState.Patrolling;
-        aiPath.maxSpeed = moveSpeed; // Reset tốc độ
+        searchPoints = sortedPoints;
+
+        nativePoints.Dispose();
+        distances.Dispose();
     }
+
 
     private Vector2 AvoidObstacles(Vector2 currentMovement)
     {
@@ -434,7 +473,6 @@ public class BullyController : MonoBehaviour
         animator.SetFloat("Horizontal", 0f);
         animator.SetFloat("Vertical", 0f);
         animator.SetFloat("Speed", 0f);
-        animator.Play("BullyIdle");
 
         // Đặt lại các trạng thái hoặc biến khác của NPC
         currentState = BullyState.Idle; // Đặt lại trạng thái về Idle
