@@ -15,8 +15,8 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] private float velocityPower = 0.9f;
     [SerializeField] private float frictionAmount = 0.2f;
 
-    [Header("Interaction")]
-    [SerializeField] private float interactDistance = 2f;
+    [Header("NPC Interaction")]
+    [SerializeField] private float interactDistance = 2f; //Khoảng cách để tương tác với npc (nếu cần)
 
     private Vector2 movement;
     private Vector2 smoothedMovement;
