@@ -7,11 +7,19 @@ public class PlayerControl : MonoBehaviour
     [Header("Interface")]
     [SerializeField] private Animator animator;
     [SerializeField] private Rigidbody2D rb2d;
-    [SerializeField] private float moveSpeed = 5f;
+
+    [Header("Movement Settings")]
+    [SerializeField] private float maxSpeed = 5f;
+    [SerializeField] private float acceleration = 50f;
+    [SerializeField] private float deceleration = 100f;
+    [SerializeField] private float velocityPower = 0.9f;
+    [SerializeField] private float frictionAmount = 0.2f;
+
+    [Header("Interaction")]
     [SerializeField] private float interactDistance = 2f;
 
     private Vector2 movement;
-    private List<GameObject> nearbyNPCs = new List<GameObject>();
+    private Vector2 smoothedMovement;
 
     private void Awake()
     {
@@ -21,7 +29,9 @@ public class PlayerControl : MonoBehaviour
 
     private void FixedUpdate()
     {
+        SmoothMovement();
         Move();
+        ApplyFriction();
     }
 
     private void Update()
@@ -34,45 +44,43 @@ public class PlayerControl : MonoBehaviour
         movement = value.Get<Vector2>();
     }
 
-    private void OnInteract()
+    private void SmoothMovement()
     {
-        if (nearbyNPCs.Count > 0)
-        {
-            InteractWithNPC(nearbyNPCs[0]);
-        }
+        smoothedMovement = Vector2.Lerp(smoothedMovement, movement, Time.fixedDeltaTime * 10f);
     }
 
     private void Move()
     {
-        rb2d.MovePosition(rb2d.position + movement * moveSpeed * Time.fixedDeltaTime);
+        // Tính toán vận tốc tối đa
+        Vector2 targetVelocity = smoothedMovement * maxSpeed;
+
+        // Tính toán vận tốc hiện tại và tối đa
+        Vector2 velocityDiff = targetVelocity - rb2d.velocity;
+
+        // Tính toán lực gia tốc
+        Vector2 accelerationForce = velocityDiff * acceleration;
+
+        // Áp dụng lực vào Rigidbody2D
+        rb2d.AddForce(accelerationForce);
+
+        // Giới hạn tốc độ tối đa
+        rb2d.velocity = Vector2.ClampMagnitude(rb2d.velocity, maxSpeed);
+    }
+
+    private void ApplyFriction()
+    {
+        // Áp dụng ma sát khi người chơi bỏ tay ra khỏi nút bấm
+        if (movement.magnitude < 0.01f)
+        {
+            float frictionForce = Mathf.Min(rb2d.velocity.magnitude, frictionAmount);
+            rb2d.AddForce(-rb2d.velocity.normalized * frictionForce, ForceMode2D.Impulse);
+        }
     }
 
     private void UpdateAnimation()
     {
-        animator.SetFloat("Horizontal", movement.x);
-        animator.SetFloat("Vertical", movement.y);
-        animator.SetFloat("Speed", movement.sqrMagnitude);
-    }
-
-    private void InteractWithNPC(GameObject npc)
-    {
-        Debug.Log("Đang tương tác với NPC");
-        // Thêm logic tương tác với NPC ở đây
-    }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("NPC"))
-        {
-            nearbyNPCs.Add(other.gameObject);
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.CompareTag("NPC"))
-        {
-            nearbyNPCs.Remove(other.gameObject);
-        }
+        animator.SetFloat("Horizontal", smoothedMovement.x);
+        animator.SetFloat("Vertical", smoothedMovement.y);
+        animator.SetFloat("Speed", smoothedMovement.sqrMagnitude);
     }
 }
