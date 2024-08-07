@@ -7,6 +7,8 @@ using UnityEngine.Networking;
 using Newtonsoft.Json;
 using UnityEngine.Windows;
 using static UnityEngine.Rendering.DebugUI.Table;
+using UnityEditor.VersionControl;
+using UnityEditor;
 
 public class LoginWeb : Singleton<LoginWeb>
 {
@@ -22,13 +24,10 @@ public class LoginWeb : Singleton<LoginWeb>
     private static readonly string RegisterURL = "https://phamduchuan.name.vn/RegisterUser.php";
     private static readonly string rankURL = "https://phamduchuan.name.vn/rank.php";
     private static readonly string GetItemValueURL = "https://phamduchuan.name.vn/GetValueItems.php";
+    private string assetFolderPath = "Assets/Code C#/Database/ScriptableOfject/Item/";
 
     [SerializeField] GamePlay gameplayData;
     public GameObject[] rows;
-    private void Start()
-    {
-        StartCoroutine(GetItems());
-    }
 
     public void login()
     {
@@ -208,28 +207,5 @@ public class LoginWeb : Singleton<LoginWeb>
     private class GameDataWrapper
     {
         public GameData[] items;
-    }
-    
-
-    public ItemValue itemList;
-    IEnumerator GetItems()
-    {
-        UnityWebRequest www = UnityWebRequest.Get(GetItemValueURL);
-        yield return www.SendWebRequest();
-
-        if (www.result != UnityWebRequest.Result.Success)
-        {
-            Debug.LogError("Error: " + www.error);
-        }
-        else
-        {
-            string json = www.downloadHandler.text;
-            List<ItemValue.itemValue> items = JsonConvert.DeserializeObject<List<ItemValue.itemValue>>(json);
-            itemList.Itemp = items;
-            foreach (ItemValue.itemValue item in items)
-            {
-                Debug.Log("Item ID: " + item.Items_Id + ", Name: " + item.Items_Name + ", Feature: " + item.Feature + ", Duration: " + item.Duration);
-            }
-        }
     }
 }
