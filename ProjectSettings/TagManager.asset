@@ -90,3 +90,6 @@ TagManager:
   - name: Bird
     uniqueID: 1793256067
     locked: 0
+  - name: Weather
+    uniqueID: 1097679131
+    locked: 0

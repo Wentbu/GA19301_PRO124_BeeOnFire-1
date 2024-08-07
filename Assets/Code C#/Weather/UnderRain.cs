@@ -11,7 +11,7 @@ public class UnderRain : MonoBehaviour
     public Image uiFill;
     public GameObject sickIcon;
     public GameObject underRainBar;
-    //public Top_DownMovement top_DownMovement;
+    //public PlayerControl playerControl;
     //public MauNVC ReduceHT;
     void Awake()
     {
@@ -85,7 +85,7 @@ public class UnderRain : MonoBehaviour
     //    isSick = true;
     //    sickIcon.SetActive(true);
     //    ReduceHT.Heal=ReduceHT.Heal/2;
-    //    top_DownMovement.ApplySick();
+    //playerControl.ApplySick();
     //    yield return new WaitForSeconds(8f);
     //    StartCoroutine(BlinkIcon());
     //    yield return new WaitForSeconds(2f);

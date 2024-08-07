@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
+using System.Collections;
 
 public class PlayerControl : MonoBehaviour
 {
+
     [Header("Interface")]
     [SerializeField] private Animator animator;
     [SerializeField] private Rigidbody2D rb2d;
@@ -20,7 +22,7 @@ public class PlayerControl : MonoBehaviour
 
     private Vector2 movement;
     private Vector2 smoothedMovement;
-
+    
     private void Awake()
     {
         animator = GetComponent<Animator>();
@@ -83,4 +85,5 @@ public class PlayerControl : MonoBehaviour
         animator.SetFloat("Vertical", smoothedMovement.y);
         animator.SetFloat("Speed", smoothedMovement.sqrMagnitude);
     }
+
 }
