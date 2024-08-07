@@ -8,6 +8,8 @@ TagManager:
   - Car
   - ViewRange
   - Intersection
+  - Destination
+  - AiController
   layers:
   - Default
   - TransparentFX
@@ -53,6 +55,9 @@ TagManager:
     locked: 0
   - name: Ground
     uniqueID: 719257725
+    locked: 0
+  - name: Portal
+    uniqueID: 3356011495
     locked: 0
   - name: itemplayground
     uniqueID: 2365816531
