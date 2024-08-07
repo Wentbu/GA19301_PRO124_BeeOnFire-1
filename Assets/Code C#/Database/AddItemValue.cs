@@ -30,6 +30,11 @@ public class AddItemValue : MonoBehaviour
             Debug.Log("Received JSON: " + jsonResult); // Log JSON nhận được để kiểm tra
 
             List<ItemData> itemsList = ParseJsonData(jsonResult);
+            foreach (var he in itemsList)
+            {
+                Debug.Log("ID" + he.Items_Id + "name" + he.Items_Name + "Fe" + he.Feature + "Du" + he.Duration);
+            }
+
             foreach (var item in itemsList)
             {
                 if (item != null)
