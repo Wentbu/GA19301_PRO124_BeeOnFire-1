@@ -11,7 +11,7 @@ public class UnderRain : MonoBehaviour
     public Image uiFill;
     public GameObject sickIcon;
     public GameObject underRainBar;
-    //public PlayerControl playerControl;
+    public PlayerControl playerControl;
     //public MauNVC ReduceHT;
     void Awake()
     {
@@ -47,14 +47,15 @@ public class UnderRain : MonoBehaviour
             timeInRain = 0;
         }
     }
-    //private void OnTriggerEnter2D(Collider2D collision)
-    //{
-    //    if (collision.tag == "Player") // Đảm bảo rằng đối tượng là nhân vật chính
-    //    {
-    //        isInRain = true;
-    //        StartCoroutine(CheckRainEffect());
-    //    }
-    //}
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Player") // Đảm bảo rằng đối tượng là nhân vật chính
+        {
+            isInRain = true;
+            StartCoroutine(CheckRainEffect());
+        }
+    }
+
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.tag == "Player")
@@ -63,36 +64,36 @@ public class UnderRain : MonoBehaviour
 
         }
     }
-    // Coroutine kiểm tra thời gian nhân vật đứng trong mưa
-    //private IEnumerator CheckRainEffect()
-    //{
-    //    while (isInRain)
-    //    {
-    //        timeInRain += Time.deltaTime;
-    //        uiFill.fillAmount = timeInRain / 10;
-    //        if (timeInRain >= rainDuration)
-    //        {
-    //            StartCoroutine(ApplySicknessEffect());
-    //            timeInRain = 0.0f; // Đặt lại thời gian sau khi áp dụng hiệu ứng bệnh
-    //        }
-    //        yield return null;
-    //    }
-    //}
+    //Coroutine kiểm tra thời gian nhân vật đứng trong mưa
+    private IEnumerator CheckRainEffect()
+    {
+        while (isInRain)
+        {
+            timeInRain += Time.deltaTime;
+            uiFill.fillAmount = timeInRain / 10;
+            if (timeInRain >= rainDuration)
+            {
+                StartCoroutine(ApplySicknessEffect());
+                timeInRain = 0.0f; // Đặt lại thời gian sau khi áp dụng hiệu ứng bệnh
+            }
+            yield return null;
+        }
+    }
 
-    // Áp dụng hiệu ứng bệnh cho nhân vật
-    //private IEnumerator ApplySicknessEffect()
-    //{
-    //    isSick = true;
-    //    sickIcon.SetActive(true);
-    //    ReduceHT.Heal=ReduceHT.Heal/2;
-    //playerControl.ApplySick();
-    //    yield return new WaitForSeconds(8f);
-    //    StartCoroutine(BlinkIcon());
-    //    yield return new WaitForSeconds(2f);
-    //    ReduceHT.Heal =ReduceHT.Heal*2;
-    //    isSick = false;
-    //    sickIcon.SetActive(false);
-    //}
+    //Áp dụng hiệu ứng bệnh cho nhân vật
+    private IEnumerator ApplySicknessEffect()
+    {
+        isSick = true;
+        sickIcon.SetActive(true);
+        //ReduceHT.Heal = ReduceHT.Heal / 2;
+        playerControl.ApplySick();
+        yield return new WaitForSeconds(8f);
+        StartCoroutine(BlinkIcon());
+        yield return new WaitForSeconds(2f);
+        //ReduceHT.Heal = ReduceHT.Heal * 2;
+        isSick = false;
+        sickIcon.SetActive(false);
+    }
     private IEnumerator BlinkIcon()
     {
         float endTime = Time.time + 2;
