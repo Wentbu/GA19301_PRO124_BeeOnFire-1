@@ -1,12 +1,9 @@
 ﻿using Newtonsoft.Json;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
-using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 using UnityEngine.Networking;
-using UnityEngine.UIElements;
 
 public class AddItemValue : MonoBehaviour
 {
@@ -33,10 +30,6 @@ public class AddItemValue : MonoBehaviour
             string json = www.downloadHandler.text;
             List<ItemValueList.itemValueList> items = JsonConvert.DeserializeObject<List<ItemValueList.itemValueList>>(json);
             itemList.Itemp = items;
-            foreach (ItemValueList.itemValueList item in items)
-            {
-                Debug.Log("Item ID: " + item.Items_Id + ", Name: " + item.Items_Name + ", Feature: " + item.Feature + ", Duration: " + item.Duration);
-            }
             GenerateOrUpdateScriptableObjects();
         }
     }

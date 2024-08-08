@@ -1,9 +1,5 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class MenuPlay : MonoBehaviour
 {
@@ -15,7 +11,7 @@ public class MenuPlay : MonoBehaviour
     {
         if (gamePlayData.login == true)
         {
-            gameplayData.levelId = UnityEngine.Random.Range(1, 3);
+            gameplayData.levelId = Random.Range(1, 4);
             SceneManager.LoadScene(gamePlayData.levelId);
         }
         else
@@ -37,10 +33,6 @@ public class MenuPlay : MonoBehaviour
         Application.Quit();
     }
 
-    public void GamePlay()
-    {
-        GameManager.Instance.LogGamePlay(gameplayData.starTime, gameplayData.endTime);
-    }
     public void GetData()
     {
         LoginWeb.Instance.GetData();
