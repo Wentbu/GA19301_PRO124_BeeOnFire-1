@@ -62,6 +62,8 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using Pathfinding;
+using static Codice.Client.Common.WebApi.WebApiEndpoints;
+using UnityEditorInternal.Profiling.Memory.Experimental.FileFormat;
 
 namespace Pathfinding
 {
@@ -69,14 +71,15 @@ namespace Pathfinding
     [HelpURL("http://arongranberg.com/astar/docs/class_pathfinding_1_1_patrol.php")]
     public class Patrol : VersionedMonoBehaviour
     {
-        public Transform[] waypoints;
-        public float delay = 0;
-        public float detectionDistance = 2f; // Distance to detect cars ahead
-        public LayerMask carLayerMask; // Layer mask for car detection
-        public float slowDownFactor = 0.5f; // Factor to slow down the car when an obstacle is detected
-        public float checkInterval = 0.2f; // Time interval for obstacle checks
-        public float intersectionStopDuration = 1f; // Duration to stop at an intersection
+        [SerializeField] public Transform[] waypoints;
+        [SerializeField] public float delay = 0;
+        [SerializeField] public float detectionDistance = 2f; // Distance to detect cars ahead
+        [SerializeField] public LayerMask carLayerMask; // Layer mask for car detection
+        [SerializeField] public float slowDownFactor = 0.5f; // Factor to slow down the car when an obstacle is detected
+        [SerializeField] public float checkInterval = 0.2f; // Time interval for obstacle checks
+        [SerializeField] public float intersectionStopDuration = 1f; // Duration to stop at an intersection
         private bool isWaiting = false;
+        [SerializeField] public float entryTime;
 
         private int index = 0;
         private IAstarAI agent;
@@ -87,10 +90,10 @@ namespace Pathfinding
         private float originalSpeed;
         private bool isStoppingAtIntersection = false;
 
-        public SpriteSet currentSpriteSet;
-        public AnimationSet currentAnimationSet;
-        public CarColliderConfig leftRightCarColliderConfig;
-        public CarColliderConfig upDownCarColliderConfig;
+        [SerializeField] public SpriteSet currentSpriteSet;
+        [SerializeField] public AnimationSet currentAnimationSet;
+        [SerializeField] public CarColliderConfig leftRightCarColliderConfig;
+        [SerializeField] public CarColliderConfig upDownCarColliderConfig;
 
         private Animator animator;
         private SpriteRenderer spriteRenderer;
@@ -278,31 +281,38 @@ namespace Pathfinding
 
             Debug.Log("Continuing after intersection");
         }
+        public void StopAtIntersection(float waitTime)
+        {
+            entryTime = Time.time;
+            isWaiting = true;
+            agent.isStopped = true;
+            Invoke("AllowToProceed", waitTime); // Allow the car to proceed after wait time
+        }
     }
-
+    
     [System.Serializable]
     public class CarColliderConfig
     {
-        public Vector2 size;
-        public Vector2 offset;
+        [SerializeField] public Vector2 size;
+        [SerializeField] public Vector2 offset;
     }
 
     [System.Serializable]
     public class SpriteSet
     {
-        public Sprite leftSprite;
-        public Sprite rightSprite;
-        public Sprite upSprite;
-        public Sprite downSprite;
+        [SerializeField] public Sprite leftSprite;
+        [SerializeField] public Sprite rightSprite;
+        [SerializeField] public Sprite upSprite;
+        [SerializeField] public Sprite downSprite;
     }
 
     [System.Serializable]
     public class AnimationSet
     {
-        public AnimationClip leftClip;
-        public AnimationClip rightClip;
-        public AnimationClip upClip;
-        public AnimationClip downClip;
+        [SerializeField] public AnimationClip leftClip;
+        [SerializeField] public AnimationClip rightClip;
+        [SerializeField] public AnimationClip upClip;
+        [SerializeField] public AnimationClip downClip;
     }
 }
 

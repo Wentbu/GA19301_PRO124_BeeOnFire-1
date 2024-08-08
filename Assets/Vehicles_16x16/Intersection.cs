@@ -56,12 +56,12 @@ public class Intersection : MonoBehaviour
 
 public class Car : MonoBehaviour
 {
-    public float stopDuration = 1f; // Time for the car to stop at the intersection
-    public float detectionDistance = 2f;
-    public LayerMask carLayerMask;
+    [SerializeField] public float stopDuration = 1f; // Time for the car to stop at the intersection
+    [SerializeField] public float detectionDistance = 2f;
+    [SerializeField] public LayerMask carLayerMask;
 
     private IAstarAI agent;
-    public float entryTime;
+    [SerializeField] public float entryTime;
     private bool isWaiting = false;
 
     private void Awake()
