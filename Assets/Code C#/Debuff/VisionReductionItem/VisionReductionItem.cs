@@ -3,9 +3,9 @@ using UnityEngine.Rendering.Universal;
 
 public class VisionReductionItem : MonoBehaviour
 {
-    public float reducedInnerRadius = 0.5f;     // Giá trị inner radius muốn giảm xuống
-    public float reducedOuterRadius = 5f;       // Giá trị outer radius muốn giảm xuống
-    public Material litMaterial;                // Material mới với Sprite-Lit-Default shader
+    public float reducedInnerRadius = 0.5f;    // Giá trị inner radius muốn giảm xuống
+    public float reducedOuterRadius = 1f;      // Giá trị outer radius muốn giảm xuống
+    public Material listMaterial;               // Material mới với Sprite-Lit-Default shader
     private bool isTriggered = false;
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -30,7 +30,7 @@ public class VisionReductionItem : MonoBehaviour
         {
             if (renderer.material.shader.name == "Sprites/Default")
             {
-                renderer.material = litMaterial;
+                renderer.material = listMaterial;
             }
         }
     }
