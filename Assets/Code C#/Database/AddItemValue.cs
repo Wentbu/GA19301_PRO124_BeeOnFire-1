@@ -1,96 +1,83 @@
-﻿using System.Collections;
+﻿using Newtonsoft.Json;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
+using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.UIElements;
 
 public class AddItemValue : MonoBehaviour
 {
     private static readonly string GetItemValueURL = "https://phamduchuan.name.vn/GetValueItems.php";
-    private string assetFolderPath = "Assets/ItemsData/";
-
     // Start is called before the first frame update
+
+    public NewItem neww;
     void Start()
     {
-        StartCoroutine(GetItemsData());
+        StartCoroutine(GetItems());
     }
-
-    IEnumerator GetItemsData()
+    public ItemValueList itemList;
+    IEnumerator GetItems()
     {
         UnityWebRequest www = UnityWebRequest.Get(GetItemValueURL);
         yield return www.SendWebRequest();
 
         if (www.result != UnityWebRequest.Result.Success)
         {
-            Debug.LogError(www.error);
+            Debug.LogError("Error: " + www.error);
         }
         else
         {
-            var jsonResult = www.downloadHandler.text;
-            Debug.Log("Received JSON: " + jsonResult); // Log JSON nhận được để kiểm tra
-
-            List<ItemData> itemsList = ParseJsonData(jsonResult);
-            foreach (var he in itemsList)
+            string json = www.downloadHandler.text;
+            List<ItemValueList.itemValueList> items = JsonConvert.DeserializeObject<List<ItemValueList.itemValueList>>(json);
+            itemList.Itemp = items;
+            foreach (ItemValueList.itemValueList item in items)
             {
-                Debug.Log("ID" + he.Items_Id + "name" + he.Items_Name + "Fe" + he.Feature + "Du" + he.Duration);
+                Debug.Log("Item ID: " + item.Items_Id + ", Name: " + item.Items_Name + ", Feature: " + item.Feature + ", Duration: " + item.Duration);
+            }
+            GenerateOrUpdateScriptableObjects();
+        }
+    }
+
+    public ItemValueList itemValueList;
+
+    [ContextMenu("Generate Or Update ScriptableObjects")]
+    void GenerateOrUpdateScriptableObjects()
+    {
+        // Tạo thư mục lưu trữ các ScriptableObject nếu chưa tồn tại
+        string folderPath = "Assets/ItemsData";
+        if (!System.IO.Directory.Exists(folderPath))
+        {
+            System.IO.Directory.CreateDirectory(folderPath);
+        }
+
+        foreach (var item in itemValueList.Itemp)
+        {
+            // Tạo đường dẫn file cho ScriptableObject
+            string assetPath = $"{folderPath}/Item_{item.Items_Name}.asset";
+
+            // Kiểm tra xem ScriptableObject đã tồn tại chưa
+            NewItem existingItem = AssetDatabase.LoadAssetAtPath<NewItem>(assetPath);
+            if (existingItem == null)
+            {
+                // Nếu không tồn tại, tạo mới
+                existingItem = ScriptableObject.CreateInstance<NewItem>();
+                AssetDatabase.CreateAsset(existingItem, assetPath);
             }
 
-            foreach (var item in itemsList)
-            {
-                if (item != null)
-                {
-                    Debug.Log($"Item Id: {item.Items_Id}, Name: {item.Items_Name}");
-                }
-                else
-                {
-                    Debug.LogError("Null item found in list.");
-                }
-                // Tạo ScriptableObject cho mỗi hàng trong CSDL
-                ItemData itemData = ScriptableObject.CreateInstance<ItemData>();
-                itemData.Items_Id = item.Items_Id;
-                itemData.Items_Name = item.Items_Name.ToString();
-                itemData.Feature = item.Feature.ToString();
-                itemData.Duration = item.Duration;
+            // Cập nhật dữ liệu của ScriptableObject
+            existingItem.Items_Id = item.Items_Id;
+            existingItem.Items_Name = item.Items_Name;
+            existingItem.Feature = item.Feature;
+            existingItem.Duration = item.Duration;
 
-                // Lưu ScriptableObject vào tệp
-                SaveItemDataAsAsset(itemData, item.Items_Name);
-            }
-
-            // Lưu các thay đổi trong Editor
-            AssetDatabase.SaveAssets();
-        }
-    }
-
-    List<ItemData> ParseJsonData(string json)
-    {
-        // Nếu JSON không đúng định dạng, log lỗi để kiểm tra
-        try
-        {
-            ItemsList itemList = JsonUtility.FromJson<ItemsList>(json);
-            return itemList.items;
-        }
-        catch (System.Exception e)
-        {
-            Debug.LogError("JSON Parse Error: " + e.Message);
-            return new List<ItemData>();
-        }
-    }
-
-    void SaveItemDataAsAsset(ItemData itemData, string itemName)
-    {
-        // Đảm bảo thư mục tồn tại
-        if (!AssetDatabase.IsValidFolder(assetFolderPath))
-        {
-            AssetDatabase.CreateFolder("Assets", "ItemsData");
+            // Lưu thay đổi
+            EditorUtility.SetDirty(existingItem);
         }
 
-        string assetPath = assetFolderPath + itemName + ".asset";
-        AssetDatabase.CreateAsset(itemData, assetPath);
-    }
-
-    [System.Serializable]
-    public class ItemsList
-    {
-        public List<ItemData> items;
+        // Cập nhật tất cả tài sản để đảm bảo các thay đổi được lưu
+        AssetDatabase.SaveAssets();
     }
 }

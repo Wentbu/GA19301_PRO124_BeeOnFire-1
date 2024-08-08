@@ -9,6 +9,7 @@ public class MenuPlay : MonoBehaviour
 {
     [SerializeField] private GamePlay gamePlayData;
     [SerializeField] private GameObject panelLogin;
+    [SerializeField] private GameObject groupButtonMenu;
     [SerializeField] private GamePlay gameplayData;
     public void playGame()
     {
@@ -20,6 +21,7 @@ public class MenuPlay : MonoBehaviour
         else
         {
             panelLogin.gameObject.SetActive(true);
+            groupButtonMenu.gameObject.SetActive(false);
         }
     }
 
