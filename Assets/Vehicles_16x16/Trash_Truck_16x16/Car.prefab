@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 8389723679431397086}
   - component: {fileID: 3150282611469443581}
   - component: {fileID: 84415959610692226}
+  - component: {fileID: 5916861211223720927}
   m_Layer: 3
   m_Name: Car
   m_TagString: Car
@@ -30,7 +31,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1565867720076233627}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 27.54, y: -4.67, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -102,8 +103,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1189592171
-  m_SortingLayer: 0
+  m_SortingLayerID: 598659439
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 1094692579, guid: 3cd472d60f5047b41882f6b202b9aaae, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -188,7 +189,7 @@ MonoBehaviour:
   traversableTags: -1
   tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   graphMask:
-    value: -1
+    value: 4
 --- !u!114 &3150282611469443581
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -202,10 +203,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 5
-  radius: 0.5
+  radius: 3.46
   height: 2
   canMove: 1
-  maxSpeed: 1
+  maxSpeed: 7
   gravity: {x: NaN, y: NaN, z: NaN}
   groundMask:
     serializedVersion: 2
@@ -213,8 +214,8 @@ MonoBehaviour:
   centerOffsetCompatibility: NaN
   repathRateCompatibility: NaN
   canSearchCompability: 0
-  orientation: 0
-  enableRotation: 1
+  orientation: 1
+  enableRotation: 0
   autoRepath:
     mode: 2
     interval: 0.5
@@ -225,12 +226,12 @@ MonoBehaviour:
   maxAcceleration: -2.5
   rotationSpeed: 360
   slowdownDistance: 0.6
-  pickNextWaypointDist: 2
-  endReachedDistance: 0.2
-  alwaysDrawGizmos: 0
+  pickNextWaypointDist: 4.77
+  endReachedDistance: 4.68
+  alwaysDrawGizmos: 1
   slowWhenNotFacingTarget: 1
-  whenCloseToDestination: 0
-  constrainInsideGraph: 0
+  whenCloseToDestination: 1
+  constrainInsideGraph: 1
 --- !u!114 &84415959610692226
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -244,7 +245,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 1
-  waypoints: []
+  waypoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   delay: 0
   detectionDistance: 2
   carLayerMask:
@@ -261,13 +269,34 @@ MonoBehaviour:
     upSprite: {fileID: 0}
     downSprite: {fileID: 0}
   currentAnimationSet:
-    leftClip: {fileID: 0}
-    rightClip: {fileID: 0}
-    upClip: {fileID: 0}
-    downClip: {fileID: 0}
+    leftClip: {fileID: 7400000, guid: 0d08c3a72294324478d80175522ccd80, type: 2}
+    rightClip: {fileID: 7400000, guid: 683af3d64818f564e9c1be3f5aa7a0a4, type: 2}
+    upClip: {fileID: 7400000, guid: 41add5005962747498c413caf6b2e125, type: 2}
+    downClip: {fileID: 7400000, guid: dbf883ec56c953a40a4d293d098a9cac, type: 2}
   leftRightCarColliderConfig:
     size: {x: 7.145994, y: 2.635886}
     offset: {x: 0.1615229, y: -0.9732211}
   upDownCarColliderConfig:
     size: {x: 2.678732, y: 6.767375}
     offset: {x: 0.04473209, y: -1.053515}
+--- !u!95 &5916861211223720927
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1565867720076233627}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 67f1d85cc89c0d545977e5a87bc727d5, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

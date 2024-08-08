@@ -10,6 +10,7 @@ public class PlayerControl : MonoBehaviour
     [Header("Interface")]
     [SerializeField] private Animator animator;
     [SerializeField] private Rigidbody2D rb2d;
+    [SerializeField] private InventoryManager inventoryManager;
 
     [Header("Movement Settings")]
     private float moveSpeed;
@@ -32,6 +33,10 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] Image buffSpeedIcon; // Icon cho buff
     [SerializeField] private GameObject shadowPrefab; // Prefab cho bóng mờ
 
+    [Header("Gameplay")]
+    [SerializeField] public Door nearbyDoor;
+
+
     private Vector2 movement;
     private Vector2 smoothedMovement;
 
@@ -43,6 +48,7 @@ public class PlayerControl : MonoBehaviour
 
     private void Start()
     {
+        inventoryManager = FindObjectOfType<InventoryManager>();
         moveSpeed = maxSpeed;
     }
 
@@ -56,6 +62,29 @@ public class PlayerControl : MonoBehaviour
     private void Update()
     {
         UpdateAnimation();
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            InventoryManager.Instance.ToggleInventory();
+        }
+
+        if (nearbyDoor != null && Input.GetKeyDown(KeyCode.G))
+        {
+            nearbyDoor.TryOpenDoor();
+        }
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            Item selectedItem = inventoryManager.GetSelectedItem(false);
+            if (selectedItem != null)
+            {
+                if (!(selectedItem is Key))  // Only use items that are not KeyItem
+                {
+                    selectedItem.Use(this);
+                    inventoryManager.GetSelectedItem(true); // Consume the item
+                }
+            }
+        }
     }
 
     private void OnMove(InputValue value)

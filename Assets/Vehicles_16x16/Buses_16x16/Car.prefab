@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 8389723679431397086}
   - component: {fileID: 3150282611469443581}
   - component: {fileID: 84415959610692226}
+  - component: {fileID: 2053589282954823870}
   m_Layer: 3
   m_Name: Car
   m_TagString: Car
@@ -102,8 +103,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1189592171
-  m_SortingLayer: 0
+  m_SortingLayerID: 598659439
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: -1885970877, guid: ddcd15a40d29c6f4e9bc5d4268e3181e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -188,7 +189,7 @@ MonoBehaviour:
   traversableTags: -1
   tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   graphMask:
-    value: -1
+    value: 4
 --- !u!114 &3150282611469443581
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -202,10 +203,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 5
-  radius: 0.5
+  radius: 3.62
   height: 2
   canMove: 1
-  maxSpeed: 1
+  maxSpeed: 8
   gravity: {x: NaN, y: NaN, z: NaN}
   groundMask:
     serializedVersion: 2
@@ -213,8 +214,8 @@ MonoBehaviour:
   centerOffsetCompatibility: NaN
   repathRateCompatibility: NaN
   canSearchCompability: 0
-  orientation: 0
-  enableRotation: 1
+  orientation: 1
+  enableRotation: 0
   autoRepath:
     mode: 2
     interval: 0.5
@@ -225,11 +226,11 @@ MonoBehaviour:
   maxAcceleration: -2.5
   rotationSpeed: 360
   slowdownDistance: 0.6
-  pickNextWaypointDist: 2
-  endReachedDistance: 0.2
+  pickNextWaypointDist: 3.76
+  endReachedDistance: 3.73
   alwaysDrawGizmos: 0
   slowWhenNotFacingTarget: 1
-  whenCloseToDestination: 0
+  whenCloseToDestination: 1
   constrainInsideGraph: 0
 --- !u!114 &84415959610692226
 MonoBehaviour:
@@ -271,3 +272,24 @@ MonoBehaviour:
   upDownCarColliderConfig:
     size: {x: 2.829023, y: 6.120042}
     offset: {x: 0.03403759, y: -0.1466557}
+--- !u!95 &2053589282954823870
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1565867720076233627}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

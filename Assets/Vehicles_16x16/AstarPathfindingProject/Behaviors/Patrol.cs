@@ -62,8 +62,6 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using Pathfinding;
-using static Codice.Client.Common.WebApi.WebApiEndpoints;
-using UnityEditorInternal.Profiling.Memory.Experimental.FileFormat;
 
 namespace Pathfinding
 {

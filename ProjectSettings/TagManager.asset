@@ -10,6 +10,9 @@ TagManager:
   - Intersection
   - Destination
   - AiController
+  - Item
+  - Door
+  - Slot
   layers:
   - Default
   - TransparentFX
@@ -100,4 +103,7 @@ TagManager:
     locked: 0
   - name: Weather
     uniqueID: 1097679131
+    locked: 0
+  - name: Item
+    uniqueID: 1342460225
     locked: 0
