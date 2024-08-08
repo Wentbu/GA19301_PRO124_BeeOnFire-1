@@ -80,6 +80,7 @@ namespace Pathfinding
         [SerializeField] public float intersectionStopDuration = 1f; // Duration to stop at an intersection
         private bool isWaiting = false;
         [SerializeField] public float entryTime;
+        [SerializeField] public float knockbackForce;
 
         private int index = 0;
         private IAstarAI agent;
@@ -89,6 +90,7 @@ namespace Pathfinding
         private float nextCheckTime = 0f;
         private float originalSpeed;
         private bool isStoppingAtIntersection = false;
+        private Rigidbody2D rb;
 
         [SerializeField] public SpriteSet currentSpriteSet;
         [SerializeField] public AnimationSet currentAnimationSet;
@@ -287,6 +289,25 @@ namespace Pathfinding
             isWaiting = true;
             agent.isStopped = true;
             Invoke("AllowToProceed", waitTime); // Allow the car to proceed after wait time
+        }
+        void OnCollisionEnter2D(Collision2D collision)
+        {
+            if (collision.gameObject.CompareTag("Player"))
+            {
+                ApplyKnockback(collision);
+            }
+        }
+        void ApplyKnockback(Collision2D collision)
+        {
+            Vector2 knockbackDirection = (rb.position - collision.rigidbody.position).normalized;
+            rb.AddForce(knockbackDirection * knockbackForce, ForceMode2D.Impulse);
+
+            // Also apply knockback to the other car/player
+            Rigidbody2D otherRb = collision.rigidbody;
+            if (otherRb != null)
+            {
+                otherRb.AddForce(-knockbackDirection * knockbackForce, ForceMode2D.Impulse);
+            }
         }
     }
     
