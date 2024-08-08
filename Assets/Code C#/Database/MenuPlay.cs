@@ -1,25 +1,23 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class MenuPlay : MonoBehaviour
 {
     [SerializeField] private GamePlay gamePlayData;
     [SerializeField] private GameObject panelLogin;
+    [SerializeField] private GameObject groupButtonMenu;
     [SerializeField] private GamePlay gameplayData;
     public void playGame()
     {
         if (gamePlayData.login == true)
         {
-            gameplayData.levelId = UnityEngine.Random.Range(1, 3);
+            gameplayData.levelId = Random.Range(1, 4);
             SceneManager.LoadScene(gamePlayData.levelId);
         }
         else
         {
             panelLogin.gameObject.SetActive(true);
+            groupButtonMenu.gameObject.SetActive(false);
         }
     }
 
@@ -35,10 +33,6 @@ public class MenuPlay : MonoBehaviour
         Application.Quit();
     }
 
-    public void GamePlay()
-    {
-        GameManager.Instance.LogGamePlay(gameplayData.starTime, gameplayData.endTime);
-    }
     public void GetData()
     {
         LoginWeb.Instance.GetData();

@@ -104,7 +104,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 788800317
-  m_SortingLayer: 13
+  m_SortingLayer: 14
   m_SortingOrder: 0
   m_Sprite: {fileID: -356119617, guid: 354400ba2eafd6c45990be70c58963a2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -279,6 +279,8 @@ MonoBehaviour:
   slowDownFactor: 0.5
   checkInterval: 1
   intersectionStopDuration: 1
+  entryTime: 0
+  knockbackForce: 200
   currentSpriteSet:
     leftSprite: {fileID: -2061843627, guid: 354400ba2eafd6c45990be70c58963a2, type: 3}
     rightSprite: {fileID: 1879536984, guid: 354400ba2eafd6c45990be70c58963a2, type: 3}

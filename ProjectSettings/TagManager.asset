@@ -68,6 +68,9 @@ TagManager:
   - name: Player
     uniqueID: 2424540825
     locked: 0
+  - name: Car
+    uniqueID: 598659439
+    locked: 0
   - name: itemplayground2
     uniqueID: 3457133751
     locked: 0

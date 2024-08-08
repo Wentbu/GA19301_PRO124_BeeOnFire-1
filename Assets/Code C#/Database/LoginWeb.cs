@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
-using Newtonsoft.Json;
-using UnityEngine.Windows;
-using static UnityEngine.Rendering.DebugUI.Table;
-using UnityEditor.VersionControl;
-using UnityEditor;
 
 public class LoginWeb : Singleton<LoginWeb>
 {
@@ -24,7 +17,6 @@ public class LoginWeb : Singleton<LoginWeb>
     private static readonly string RegisterURL = "https://phamduchuan.name.vn/RegisterUser.php";
     private static readonly string rankURL = "https://phamduchuan.name.vn/rank.php";
     private static readonly string GetItemValueURL = "https://phamduchuan.name.vn/GetValueItems.php";
-    private string assetFolderPath = "Assets/Code C#/Database/ScriptableOfject/Item/";
 
     [SerializeField] GamePlay gameplayData;
     public GameObject[] rows;

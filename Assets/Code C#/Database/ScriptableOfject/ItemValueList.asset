@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 253e5a81c90b4e4468b230b1eed08cb6, type: 3}
+  m_Name: ItemValueList
+  m_EditorClassIdentifier: 
+  Itemp:
+  - Items_Id: 1
+    Items_Name: Red Key
+    Feature: Open door
+    Duration: 0
+  - Items_Id: 2
+    Items_Name: Blue Key
+    Feature: Open door
+    Duration: 0
+  - Items_Id: 3
+    Items_Name: Yellow key
+    Feature: Open door
+    Duration: 0
+  - Items_Id: 4
+    Items_Name: Speed  up
+    Feature: Increase movement speed
+    Duration: 5
+  - Items_Id: 5
+    Items_Name: Reduce speed
+    Feature: Reduce movement speed
+    Duration: 5
+  - Items_Id: 6
+    Items_Name: Umbrella
+    Feature: Avoid getting sick when it rai
+    Duration: 10
+  - Items_Id: 7
+    Items_Name: Book
+    Feature: Increase knowledge
+    Duration: 0
