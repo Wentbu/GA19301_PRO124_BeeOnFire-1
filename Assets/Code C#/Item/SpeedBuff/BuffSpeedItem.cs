@@ -9,7 +9,7 @@ public class BuffSpeedItem : MonoBehaviour
         PlayerControl player= other.GetComponent<PlayerControl>();
         if (player != null)
         {
-            //player.ApplyBuffSpeed();
+            player.ApplyBuffSpeed();
             Destroy(gameObject);
         }
     }

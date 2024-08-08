@@ -1,0 +1,687 @@
+fileFormatVersion: 2
+guid: a1fca1915fc84c94c87850ea9cc98dec
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: itemssang_12
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 478
+        width: 11
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4e2f9aff595c78b4f87e64cbd1114f2b
+      internalID: -1862557177
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: itemssang_99
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 279
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 96f7ed768dede5246809f11db915c281
+      internalID: -1138247688
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: itemssang_239
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 467
+        width: 34
+        height: 34
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5aedcf4289e79994bb7adf2561e73ef7
+      internalID: -1335371376
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: itemssang_240
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 460
+        width: 41
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 87069076d6ce81c49b8b465255782987
+      internalID: -2138979715
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: itemssang_241
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 461
+        width: 41
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3a8fb4b90136c1e49bccaeadcfb5afd3
+      internalID: -1738632618
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: itemssang_242
+      rect:
+        serializedVersion: 2
+        x: 299
+        y: 449
+        width: 41
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 41fd251f5d532884e866f757c547a3c3
+      internalID: 1208138923
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: itemssang_243
+      rect:
+        serializedVersion: 2
+        x: 380
+        y: 447
+        width: 46
+        height: 72
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 67d58e36f173e084683fe7ac8c2458d1
+      internalID: -1894325721
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: itemssang_244
+      rect:
+        serializedVersion: 2
+        x: 463
+        y: 446
+        width: 44
+        height: 75
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6208636555af90f4cba020de8de692b4
+      internalID: -675268545
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: itemssang_0
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 372
+        width: 20
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f7757cff7153fa545950a0423a9a5cd4
+      internalID: 985370983
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: itemssang_1
+      rect:
+        serializedVersion: 2
+        x: 105
+        y: 362
+        width: 19
+        height: 34
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 98ac2326a02864c4a80d14c89b550ec3
+      internalID: 1363953271
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: itemssang_2
+      rect:
+        serializedVersion: 2
+        x: 158
+        y: 357
+        width: 38
+        height: 44
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a9f98dd9a53c4784ab4ca1f9e6f52de7
+      internalID: -263022026
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: itemssang_3
+      rect:
+        serializedVersion: 2
+        x: 225
+        y: 357
+        width: 38
+        height: 44
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 657610a5cafa6e346af7e102bb7ba11a
+      internalID: 762961527
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: itemssang_4
+      rect:
+        serializedVersion: 2
+        x: 296
+        y: 348
+        width: 48
+        height: 62
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 52de03b9206a8804280659d733dc5ce6
+      internalID: -1722467045
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: itemssang_5
+      rect:
+        serializedVersion: 2
+        x: 382
+        y: 348
+        width: 43
+        height: 62
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1acc95791bcadcf49b5b652a20041b63
+      internalID: -820850467
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: itemssang_6
+      rect:
+        serializedVersion: 2
+        x: 464
+        y: 348
+        width: 43
+        height: 62
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3f443aedb63a61d41b2cca0cfd72c1ed
+      internalID: 880227293
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      itemssang_0: 985370983
+      itemssang_1: 1363953271
+      itemssang_10: 667808390
+      itemssang_100: 708474852
+      itemssang_101: 297753491
+      itemssang_102: -1459616902
+      itemssang_103: -737867687
+      itemssang_104: 728048320
+      itemssang_105: 1164724724
+      itemssang_106: -734947925
+      itemssang_107: 1412119148
+      itemssang_108: 105145536
+      itemssang_109: -1369961284
+      itemssang_11: -2092738799
+      itemssang_110: -274530594
+      itemssang_111: -1657278514
+      itemssang_112: -954811433
+      itemssang_113: -662356381
+      itemssang_114: 650991364
+      itemssang_115: -702154754
+      itemssang_116: -876703790
+      itemssang_117: 379615145
+      itemssang_118: -123322504
+      itemssang_119: -161099658
+      itemssang_12: -1862557177
+      itemssang_120: 1255585549
+      itemssang_121: 511368399
+      itemssang_122: 318330152
+      itemssang_123: -1054974693
+      itemssang_124: 1978711045
+      itemssang_125: 311218569
+      itemssang_126: 85448549
+      itemssang_127: 1441018769
+      itemssang_128: -1281022396
+      itemssang_129: -19806890
+      itemssang_13: 1205934598
+      itemssang_130: -1514477988
+      itemssang_131: -1399050765
+      itemssang_132: 1275631597
+      itemssang_133: 869841812
+      itemssang_134: -1387586005
+      itemssang_135: -2046679151
+      itemssang_136: -1558791838
+      itemssang_137: -1786933970
+      itemssang_138: -522843201
+      itemssang_139: 915666180
+      itemssang_14: -1145996203
+      itemssang_140: -903467368
+      itemssang_141: -1286606085
+      itemssang_142: -863297827
+      itemssang_143: -1152148989
+      itemssang_144: -1247855577
+      itemssang_145: 150020449
+      itemssang_146: 1042101280
+      itemssang_147: -2108101821
+      itemssang_148: 1832950035
+      itemssang_149: 2106364660
+      itemssang_15: -162948587
+      itemssang_150: -1378886935
+      itemssang_151: -1464272010
+      itemssang_152: 2121802559
+      itemssang_153: -1396548324
+      itemssang_154: -653757343
+      itemssang_155: 1545712736
+      itemssang_156: 1528887263
+      itemssang_157: -1542477629
+      itemssang_158: 1603327438
+      itemssang_159: -165236318
+      itemssang_16: 2137064530
+      itemssang_160: 1427539934
+      itemssang_161: 860906909
+      itemssang_162: 1050624626
+      itemssang_163: 781566329
+      itemssang_164: -1357639760
+      itemssang_165: -1572599556
+      itemssang_166: -235848968
+      itemssang_167: -1288500628
+      itemssang_168: -1619851842
+      itemssang_169: -1829243274
+      itemssang_17: -1618150000
+      itemssang_170: -1105884854
+      itemssang_171: -323831615
+      itemssang_172: 578033309
+      itemssang_173: 1158586668
+      itemssang_174: -1248253249
+      itemssang_175: -1861591997
+      itemssang_176: -2095593704
+      itemssang_177: -1708815450
+      itemssang_178: -1054688423
+      itemssang_179: 1033243816
+      itemssang_18: -186906234
+      itemssang_180: 1075564148
+      itemssang_181: -849842092
+      itemssang_182: -1615747220
+      itemssang_183: 1480949311
+      itemssang_184: -604672095
+      itemssang_185: -1306657858
+      itemssang_186: -1438876546
+      itemssang_187: -435891590
+      itemssang_188: 112497754
+      itemssang_189: 1757524261
+      itemssang_19: 730133289
+      itemssang_190: 1218386187
+      itemssang_191: -1216304472
+      itemssang_192: -1263797653
+      itemssang_193: 1185499473
+      itemssang_194: 774981942
+      itemssang_195: 2120736984
+      itemssang_196: -1413072019
+      itemssang_197: -2064031318
+      itemssang_198: -380164332
+      itemssang_199: -2064287228
+      itemssang_2: -263022026
+      itemssang_20: -1226585841
+      itemssang_200: 1173428125
+      itemssang_201: -1084730415
+      itemssang_202: -739482098
+      itemssang_203: -1030961145
+      itemssang_204: 1424498021
+      itemssang_205: -1897592972
+      itemssang_206: 354410926
+      itemssang_207: -1492007350
+      itemssang_208: -63942374
+      itemssang_209: -1344639140
+      itemssang_21: 259009727
+      itemssang_210: 1718343633
+      itemssang_211: 582087292
+      itemssang_212: 1027009859
+      itemssang_213: -374576513
+      itemssang_214: 215852569
+      itemssang_215: -1003477381
+      itemssang_216: -1024410083
+      itemssang_217: -1350176044
+      itemssang_218: 800915496
+      itemssang_219: -638100784
+      itemssang_22: 1453697147
+      itemssang_220: 2099180619
+      itemssang_221: 86504738
+      itemssang_222: 1548352119
+      itemssang_223: -1332809617
+      itemssang_224: 1117950587
+      itemssang_225: 2071605667
+      itemssang_226: 1350290240
+      itemssang_227: -288888784
+      itemssang_228: -1637765111
+      itemssang_229: -1264974486
+      itemssang_23: -709732804
+      itemssang_230: -79901281
+      itemssang_231: -1883449516
+      itemssang_232: 2073339381
+      itemssang_233: -446909486
+      itemssang_234: 953970453
+      itemssang_235: -379884052
+      itemssang_236: -2131754529
+      itemssang_237: -189022802
+      itemssang_238: 1476518197
+      itemssang_239: -1335371376
+      itemssang_24: -1651020679
+      itemssang_240: -2138979715
+      itemssang_241: -1738632618
+      itemssang_242: 1208138923
+      itemssang_243: -1894325721
+      itemssang_244: -675268545
+      itemssang_25: -992161159
+      itemssang_26: -1124086119
+      itemssang_27: -135105034
+      itemssang_28: -683380023
+      itemssang_29: -1986127316
+      itemssang_3: 762961527
+      itemssang_30: -2116127736
+      itemssang_31: -1271222275
+      itemssang_32: 586634663
+      itemssang_33: -616605761
+      itemssang_34: -1751970216
+      itemssang_35: -1421427780
+      itemssang_36: -2044501126
+      itemssang_37: 140750202
+      itemssang_38: 1245046481
+      itemssang_39: 192309626
+      itemssang_4: -1722467045
+      itemssang_40: 38887130
+      itemssang_41: 1307977628
+      itemssang_42: 170793053
+      itemssang_43: -1334596521
+      itemssang_44: -141223670
+      itemssang_45: 23302284
+      itemssang_46: -241421739
+      itemssang_47: -884517459
+      itemssang_48: 674461608
+      itemssang_49: 1918582040
+      itemssang_5: -820850467
+      itemssang_50: -202662382
+      itemssang_51: -487967811
+      itemssang_52: 571487335
+      itemssang_53: -566815483
+      itemssang_54: 690989772
+      itemssang_55: -36299075
+      itemssang_56: 1515454926
+      itemssang_57: 2051542328
+      itemssang_58: -1718678138
+      itemssang_59: -1559702916
+      itemssang_6: 880227293
+      itemssang_60: -1145621428
+      itemssang_61: -230616276
+      itemssang_62: 300325698
+      itemssang_63: -1964928519
+      itemssang_64: 602921584
+      itemssang_65: 1035530055
+      itemssang_66: 1228918143
+      itemssang_67: -1418928587
+      itemssang_68: -1953499636
+      itemssang_69: -1360650285
+      itemssang_7: -335606636
+      itemssang_70: 470250158
+      itemssang_71: -1639097286
+      itemssang_72: 1174887338
+      itemssang_73: 202641014
+      itemssang_74: 555506008
+      itemssang_75: -1651990470
+      itemssang_76: -1945717392
+      itemssang_77: 627284593
+      itemssang_78: -1642511401
+      itemssang_79: 1125877562
+      itemssang_8: 543800707
+      itemssang_80: -1027050784
+      itemssang_81: -2047542436
+      itemssang_82: -976350002
+      itemssang_83: 522097025
+      itemssang_84: 376214532
+      itemssang_85: -207677819
+      itemssang_86: 1746548419
+      itemssang_87: 557895559
+      itemssang_88: -1211550160
+      itemssang_89: -1253233478
+      itemssang_9: 1343663457
+      itemssang_90: -1914802611
+      itemssang_91: -549545514
+      itemssang_92: -706946270
+      itemssang_93: 1524408775
+      itemssang_94: 2064306917
+      itemssang_95: -1893713175
+      itemssang_96: -1937515093
+      itemssang_97: -577492321
+      itemssang_98: -1605355567
+      itemssang_99: -1138247688
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

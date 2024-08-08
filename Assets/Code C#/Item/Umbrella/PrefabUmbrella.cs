@@ -14,47 +14,47 @@ public class PrefabUmbrella : MonoBehaviour
         underRain = FindObjectOfType<UnderRain>();
     }
 
-    //public void AttachUmbrellaToPlayer(GameObject Adam_Player)
-    //{
-    //    if (attachedUmbrella != null)
-    //    {
-    //        Destroy(attachedUmbrella); // Hủy cây dù hiện có nếu đã tồn tại
-    //        attachedUmbrella = null;
-    //    }
+    public void AttachUmbrellaToPlayer(GameObject Adam_Player)
+    {
+        if (attachedUmbrella != null)
+        {
+            Destroy(attachedUmbrella); // Hủy cây dù hiện có nếu đã tồn tại
+            attachedUmbrella = null;
+        }
 
-    //    attachedUmbrella = Instantiate(umbrellaPrefab, Adam_Player.transform);
-    //    attachedUmbrella.transform.localPosition = new Vector3(-0.5f, 0.6f, 0);
-    //    underRain.SetUmbrellaState(true);
+        attachedUmbrella = Instantiate(umbrellaPrefab, Adam_Player.transform);
+        attachedUmbrella.transform.localPosition = new Vector3(-0.5f, 0.6f, 0);
+        //underRain.SetUmbrellaState(true);
 
-    //    if (umbrellaCoroutine != null)
-    //    {
-    //        StopCoroutine(umbrellaCoroutine);
-    //    }
+        if (umbrellaCoroutine != null)
+        {
+            StopCoroutine(umbrellaCoroutine);
+        }
 
-    //    // Bắt đầu Coroutine mới
-    //    umbrellaCoroutine = StartCoroutine(RemoveUmbrellaAfterTime());
-    //}
+        // Bắt đầu Coroutine mới
+        umbrellaCoroutine = StartCoroutine(RemoveUmbrellaAfterTime());
+    }
 
-    //IEnumerator RemoveUmbrellaAfterTime()
-    //{
+    IEnumerator RemoveUmbrellaAfterTime()
+    {
 
-    //    float timer = 0f;
+        float timer = 0f;
 
-    //    while (timer < 20f)
-    //    {
-    //        yield return null;
+        while (timer < 20f)
+        {
+            yield return null;
 
-    //        timer += Time.deltaTime;
-    //    }
-    //    RemoveAttachedUmbrella();
-    //}
+            timer += Time.deltaTime;
+        }
+        RemoveAttachedUmbrella();
+    }
 
-    //public void RemoveAttachedUmbrella()
-    //{
-    //    if (attachedUmbrella != null)
-    //    {
-    //        Destroy(attachedUmbrella);
-    //        underRain.SetUmbrellaState(false); // Thiết lập trạng thái không có dù
-    //    }
-    //}
+    public void RemoveAttachedUmbrella()
+    {
+        if (attachedUmbrella != null)
+        {
+            Destroy(attachedUmbrella);
+            //underRain.SetUmbrellaState(false); // Thiết lập trạng thái không có dù
+        }
+    }
 }

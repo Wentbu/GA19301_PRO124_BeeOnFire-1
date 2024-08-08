@@ -201,6 +201,7 @@ public class PlayerControl : MonoBehaviour
     {
         StartCoroutine(PlayerSick());
     }
+
     private IEnumerator PlayerSick()
     {
         float buffSpeedIncrease = maxSpeed * 0.25f;

@@ -10,15 +10,15 @@ public class itemUmbrella : MonoBehaviour
         prefabUmbrella = FindObjectOfType<PrefabUmbrella>();
     }
 
-    //private void OnTriggerEnter2D(Collider2D collision)
-    //{
-    //    if (collision.CompareTag("Player"))
-    //    {
-    //        if (prefabUmbrella != null)
-    //        {
-    //           prefabUmbrella.AttachUmbrellaToPlayer(collision.gameObject);
-    //            Destroy(gameObject); // Hủy itemUmbrella sau khi nhặt
-    //        }
-    //    }
-    //}
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            if (prefabUmbrella != null)
+            {
+                prefabUmbrella.AttachUmbrellaToPlayer(collision.gameObject);
+                Destroy(gameObject); // Hủy itemUmbrella sau khi nhặt
+            }
+        }
+    }
 }
