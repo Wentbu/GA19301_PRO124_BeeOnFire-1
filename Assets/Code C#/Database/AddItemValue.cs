@@ -1,16 +1,19 @@
 ﻿using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
+#if UNITY_EDITOR
+using UnityEditor;
+using System.IO;
+#endif
+
 
 public class AddItemValue : MonoBehaviour
 {
     private static readonly string GetItemValueURL = "https://phamduchuan.name.vn/GetValueItems.php";
     // Start is called before the first frame update
 
-    public NewItem neww;
     void Start()
     {
         StartCoroutine(GetItems());
@@ -39,6 +42,7 @@ public class AddItemValue : MonoBehaviour
     [ContextMenu("Generate Or Update ScriptableObjects")]
     void GenerateOrUpdateScriptableObjects()
     {
+#if UNITY_EDITOR
         // Tạo thư mục lưu trữ các ScriptableObject nếu chưa tồn tại
         string folderPath = "Assets/ItemsData";
         if (!System.IO.Directory.Exists(folderPath))
@@ -72,5 +76,6 @@ public class AddItemValue : MonoBehaviour
 
         // Cập nhật tất cả tài sản để đảm bảo các thay đổi được lưu
         AssetDatabase.SaveAssets();
+#endif
     }
 }
