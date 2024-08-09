@@ -40,7 +40,7 @@ public class PortalControler : MonoBehaviour
     {
         // Tắt vật lý của player và phát animation Tele
         playerRb.simulated = false;
-        anim.Play("PoIn");
+        anim.Play("Portal In");
 
         // Phát âm thanh khi bắt đầu teleport
         AudioSource.PlayClipAtPoint(teleportSound, player.transform.position);
@@ -59,7 +59,7 @@ public class PortalControler : MonoBehaviour
         player.transform.position = destination.position;
 
         // Phát animation TeleOut
-        anim.Play("PoOut");
+        anim.Play("Portal Out");
         yield return new WaitForSeconds(0.5f);
 
         // Bật lại vật lý cho player
@@ -69,17 +69,6 @@ public class PortalControler : MonoBehaviour
         screenOverlay.color = new Color(0, 0, 0, 0);
     }
 
-    //IEnumerator PortalIn()
-    //{
-    //    playerRb.simulated = false;
-    //    anim.Play("Tele");
-    //    StartCoroutine(MoveInPortal() );
-    //    yield return new WaitForSeconds(0.5f);
-    //    player.transform.position = destination.position;
-    //    anim.Play("TeleOut");
-    //    yield return new WaitForSeconds(0.5f);
-    //    playerRb.simulated = true;
-    //}
 
     IEnumerator MoveInPortal()
     {
@@ -109,20 +98,5 @@ public class PortalControler : MonoBehaviour
 
         screenOverlay.color = endColor; // Đảm bảo giá trị cuối cùng là màu cuối cùng
     }
-    //IEnumerator FadeScreen()
-    //{
-    //    float duration = 0.3f; // Thời gian để làm tối màn hình
-    //    float startTime = Time.time;
-    //    Color startColor = new Color(0, 0, 0, 0); // Alpha ban đầu của hình ảnh overlay
-    //    Color endColor = new Color(0, 0, 0, 1); // Alpha cuối cùng của hình ảnh overlay
-
-    //    while (Time.time < startTime + duration)
-    //    {
-    //        float t = (Time.time - startTime) / duration;
-    //        screenOverlay.color = Color.Lerp(startColor, endColor, t);
-    //        yield return null;
-    //    }
-
-    //    screenOverlay.color = endColor; // Đảm bảo giá trị cuối cùng là tối đen hoàn toàn
-    //}
+    
 }
