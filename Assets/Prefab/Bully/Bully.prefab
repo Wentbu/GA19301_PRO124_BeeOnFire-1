@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 3862512667436081595}
   - component: {fileID: 1597756998522059545}
   - component: {fileID: 4037347358080684042}
+  - component: {fileID: 5007149977786273404}
   m_Layer: 0
   m_Name: Bully
   m_TagString: Untagged
@@ -278,3 +279,15 @@ MonoBehaviour:
   patrolRadius: 20
   randomnessFactor: 0.2
   currentState: 0
+--- !u!114 &5007149977786273404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6262151123021647537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d67b21eed30ba7e4cb5504673214e698, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

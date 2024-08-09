@@ -138,7 +138,7 @@ public class NPC : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.F) && playerIsClose)
+        if (Input.GetKeyDown(KeyCode.R) && playerIsClose)
         {
             if (DialoguePanel.activeInHierarchy)
             {
@@ -253,6 +253,7 @@ public class NPC : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            Heal = other.gameObject.GetComponent<PlayerHealth>();
             playerIsClose = true;
         }
     }
