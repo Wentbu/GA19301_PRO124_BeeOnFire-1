@@ -9,7 +9,7 @@ public class SkillActivator : MonoBehaviour
     public KeyCode activationKey = KeyCode.Q; // Nút nhấn để kích hoạt skill
 
     private bool canActivate = true; // Biến kiểm tra có thể kích hoạt skill hay không
-    private float cooldownDuration = 30f; // Thời gian hồi skill
+    private float cooldownDuration = 60f; // Thời gian hồi skill
 
     private void Update()
     {

@@ -42,11 +42,11 @@ public class ColliderExpander : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("GPS"))
-        {
-            hasCollidedWithGPS = true;
-            Debug.Log("Chạm vào GPS! Vị trí: " + other.transform.position);
-        }
+        //if (other.CompareTag("GPS"))
+        //{
+        //    hasCollidedWithGPS = true;
+        //    Debug.Log("Chạm vào GPS! Vị trí: " + other.transform.position);
+        //}
 
         if (other.CompareTag("Book") && hasCollidedWithGPS && !hasCollidedWithHealth)
         {
