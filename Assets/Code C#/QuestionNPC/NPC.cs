@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class NPC : MonoBehaviour
 {
     public GameObject DialoguePanel;  // Bảng đối thoại
@@ -245,8 +246,6 @@ public class NPC : MonoBehaviour
             zeroText();  // Đặt lại văn bản khi hết dòng đối thoại
             this.enabled = false;
         }
-        QuestionMask.SetActive(false);
-        Heal.ApplyHeal();
     }
 
     public void OnTriggerEnter2D(Collider2D other)
