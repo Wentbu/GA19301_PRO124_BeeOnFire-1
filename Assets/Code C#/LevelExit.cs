@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class LevelExit : MonoBehaviour
 {
     [SerializeField] float levelLoadDelay = 1f;
-    [SerializeField] public MauNVC HocThuc;
+    [SerializeField] public PlayerHealth HocThuc;
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Player") && HocThuc.currentHealth >= 70)
@@ -28,14 +28,6 @@ public class LevelExit : MonoBehaviour
     IEnumerator LoadBadEnd()
     {
         yield return new WaitForSecondsRealtime(levelLoadDelay);
-        //int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        //int nextSceneIndex = currentSceneIndex + 1;
-
-        //if (nextSceneIndex == SceneManager.sceneCountInBuildSettings)
-        //{
-        //    nextSceneIndex = 0;
-        //}
-        //FindObjectOfType<ScenePersist>().ResetScenePersist();
         SceneManager.LoadScene("BadEnd");
     }
 
