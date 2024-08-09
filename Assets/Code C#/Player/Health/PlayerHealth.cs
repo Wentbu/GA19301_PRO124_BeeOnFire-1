@@ -23,7 +23,7 @@ public class PlayerHealth : MonoBehaviour
 
     public static event Action<float> OnHealthChanged;
 
-    private int currentHealth;
+    public int currentHealth;
     private float lastHealTime;
     private float lastDamageTime;
 
