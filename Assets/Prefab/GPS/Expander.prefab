@@ -82,8 +82,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   expansionRate: 30
-  maxRadius: 50
-  expandDistance: 1
+  maxRadius: 150
 --- !u!114 &-4004563540382091097
 MonoBehaviour:
   m_ObjectHideFlags: 0
