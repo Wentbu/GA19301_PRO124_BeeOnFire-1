@@ -20,8 +20,8 @@ public class PlayerControl : MonoBehaviour
 
     [Header("Buff Settings")]
     [SerializeField] private Coroutine buffSpeedCoroutine;
-    [SerializeField] private Coroutine debuffSpeedCoroutine;
     [SerializeField] private Coroutine blinkCoroutine;
+    [SerializeField] private float buffPercentage = 0.5f;
     [SerializeField] float buffDuration = 5f;
     [SerializeField] float blinkDuration = 2f;
     [SerializeField] Image buffSpeedIcon; // Icon cho buff
@@ -144,8 +144,8 @@ public class PlayerControl : MonoBehaviour
 
     private IEnumerator BuffSpeedItemCoroutine()
     {
-        float buffSpeedIncrease = maxSpeed * 0.5f; // Tăng 50% so với tốc độ gốc
-        moveSpeed = maxSpeed + buffSpeedIncrease;
+        float buffSpeedIncrease = maxSpeed * buffPercentage; // Tăng 50% so với tốc độ gốc
+        moveSpeed += buffSpeedIncrease;
 
         if (buffSpeedIcon != null)
         {

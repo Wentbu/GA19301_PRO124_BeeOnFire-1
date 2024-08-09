@@ -15,8 +15,9 @@ GameObject:
   - component: {fileID: 8265633430506155999}
   - component: {fileID: 4562195447635712269}
   - component: {fileID: 6177186412102098031}
-  - component: {fileID: 8267973342936052184}
   - component: {fileID: 8058609671029932076}
+  - component: {fileID: 1613416991521443949}
+  - component: {fileID: 4934576543259563243}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -134,6 +135,7 @@ MonoBehaviour:
   normalBookEffect: {fileID: 7802979462468201273, guid: bddb971e34eb14d48be30c7b922eb077, type: 3}
   badBookEffect: {fileID: 5933602760919840800, guid: fcb74f28d107e284e80af037bfec14ca, type: 3}
   explosionEffect: {fileID: 7728366230342544413, guid: 212ef1a41838ce044a9ac54994866708, type: 3}
+  currentHealth: 0
 --- !u!114 &8265633430506155999
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,6 +154,7 @@ MonoBehaviour:
   maxSpeed: 5
   acceleration: 50
   frictionAmount: 0.2
+  buffPercentage: 0
   buffDuration: 5
   blinkDuration: 2
   buffSpeedIcon: {fileID: 0}
@@ -216,7 +219,22 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!70 &8267973342936052184
+--- !u!114 &8058609671029932076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2457653625156132100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84f70249a4cba1f42a4bf474d347f46b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  expanderPrefab: {fileID: 2994203889779745975, guid: 6fc7d7813831b91418526c367beb7972, type: 3}
+  aiControllerPrefab: {fileID: 6353067186005911520, guid: 6643bcf8eec3cbc49b2e8a2295e41f11, type: 3}
+  activationKey: 113
+--- !u!70 &1613416991521443949
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -248,10 +266,10 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.013811111, y: 0.08287048}
-  m_Size: {x: 0.9723778, y: 1.271759}
+  m_Offset: {x: 0, y: 0.12835407}
+  m_Size: {x: 1, y: 1.1807919}
   m_Direction: 0
---- !u!114 &8058609671029932076
+--- !u!114 &4934576543259563243
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -260,9 +278,44 @@ MonoBehaviour:
   m_GameObject: {fileID: 2457653625156132100}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84f70249a4cba1f42a4bf474d347f46b, type: 3}
+  m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  expanderPrefab: {fileID: 2994203889779745975, guid: 6fc7d7813831b91418526c367beb7972, type: 3}
-  aiControllerPrefab: {fileID: 6353067186005911520, guid: 6643bcf8eec3cbc49b2e8a2295e41f11, type: 3}
-  activationKey: 113
+  m_ComponentVersion: 1
+  m_LightType: 3
+  m_BlendStyleIndex: 0
+  m_FalloffIntensity: 0.5
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Intensity: 2
+  m_LightVolumeIntensity: 1
+  m_LightVolumeIntensityEnabled: 0
+  m_ApplyToSortingLayers: 3986832c0000000085d7549a7d00df2ae7ab08c8d37e038df167a7fd998e83906fd1ae23b7ac0fce1dbc4de613b68c648947a607db64cab60d5c452c1b2d7c1f3d23042f83eae26a1b416d4141510450
+  m_LightCookieSprite: {fileID: 0}
+  m_DeprecatedPointLightCookieSprite: {fileID: 0}
+  m_LightOrder: 0
+  m_AlphaBlendOnOverlap: 0
+  m_OverlapOperation: 0
+  m_NormalMapDistance: 3
+  m_NormalMapQuality: 2
+  m_UseNormalMap: 0
+  m_ShadowIntensityEnabled: 0
+  m_ShadowIntensity: 0.75
+  m_ShadowVolumeIntensityEnabled: 0
+  m_ShadowVolumeIntensity: 0.75
+  m_LocalBounds:
+    m_Center: {x: 0, y: -0.00000011920929, z: 0}
+    m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
+  m_PointLightInnerAngle: 360
+  m_PointLightOuterAngle: 360
+  m_PointLightInnerRadius: 73.08
+  m_PointLightOuterRadius: 73.08
+  m_ShapeLightParametricSides: 5
+  m_ShapeLightParametricAngleOffset: 0
+  m_ShapeLightParametricRadius: 1
+  m_ShapeLightFalloffSize: 0.5
+  m_ShapeLightFalloffOffset: {x: 0, y: 0}
+  m_ShapePath:
+  - {x: -0.5, y: -0.5, z: 0}
+  - {x: 0.5, y: -0.5, z: 0}
+  - {x: 0.5, y: 0.5, z: 0}
+  - {x: -0.5, y: 0.5, z: 0}
