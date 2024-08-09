@@ -27,12 +27,12 @@ public class PortalControler : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            if(Vector2.Distance(player.transform.position, transform.position) > 0.3f)
+            if (Vector2.Distance(player.transform.position, transform.position) > 0.3f)
             {
                 StartCoroutine(PortalIn());
             }
 
-            
+
         }
     }
 
@@ -86,7 +86,7 @@ public class PortalControler : MonoBehaviour
         float time = 0;
         while (time < 0.5f)
         {
-            player.transform.position = Vector2.MoveTowards(player.transform.position,transform.position, 3*Time.deltaTime);
+            player.transform.position = Vector2.MoveTowards(player.transform.position, transform.position, 3 * Time.deltaTime);
             yield return new WaitForEndOfFrame();
             time += Time.deltaTime;
         }
