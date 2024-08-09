@@ -47,8 +47,8 @@ public class SkillActivator : MonoBehaviour
         }
 
         // Hủy expander và aiController sau 10 giây
-        Destroy(expander, 10.0f);
-        Destroy(aiController, 10.0f);
+        Destroy(expander, 30.0f);
+        Destroy(aiController, 30.0f);
 
         // Bắt đầu đếm ngược thời gian hồi skill
         Debug.Log("Bắt đầu đếm thời gian");
