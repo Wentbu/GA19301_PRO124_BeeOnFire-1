@@ -1,23 +1,27 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class MainMenuRain : MonoBehaviour
 {
     public GameObject targetObject; 
-    public float toggleInterval = 15f; 
+    public float delay = 30f;      
 
     void Start()
     {
-        StartCoroutine(ToggleObjectCoroutine());
+        
+        StartCoroutine(ToggleObjectRepeatedly());
     }
 
-    IEnumerator ToggleObjectCoroutine()
+    IEnumerator ToggleObjectRepeatedly()
     {
         while (true)
         {
-            yield return new WaitForSeconds(toggleInterval);
+            
             targetObject.SetActive(!targetObject.activeSelf);
+
+            
+            yield return new WaitForSeconds(delay);
         }
     }
 }
