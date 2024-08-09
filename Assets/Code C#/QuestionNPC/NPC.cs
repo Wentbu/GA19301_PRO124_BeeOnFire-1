@@ -35,7 +35,6 @@ public class NPC : MonoBehaviour
 
     private void Awake()
     {
-        Heal = GetComponent<PlayerHealth>();
         animator = GetComponent<Animator>();
     }
 
@@ -246,6 +245,8 @@ public class NPC : MonoBehaviour
             zeroText();  // Đặt lại văn bản khi hết dòng đối thoại
             this.enabled = false;
         }
+        QuestionMask.SetActive(false);
+        Heal.ApplyHeal();
     }
 
     public void OnTriggerEnter2D(Collider2D other)
