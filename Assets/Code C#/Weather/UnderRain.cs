@@ -89,7 +89,7 @@ public class UnderRain : MonoBehaviour
         isSick = true;
         sickIcon.SetActive(true);
         ReduceHT.ApplyDamage();
-        playerControl.ApplySick();
+        playerControl.ApplyDebuffSpeed();
         yield return new WaitForSeconds(8f);
         StartCoroutine(BlinkIcon());
         yield return new WaitForSeconds(2f);

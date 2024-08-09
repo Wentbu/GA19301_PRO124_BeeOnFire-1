@@ -13,6 +13,8 @@ public class NPC : MonoBehaviour
     private string[][] answers; // Mảng chứa các câu trả lời
     private int index;  // Chỉ số của dòng đối thoại hiện tại
 
+    [SerializeField] PlayerHealth Heal;
+    [SerializeField] private GameObject QuestionMask;
     public GameObject continueButton;  // Nút tiếp tục
     public float wordSpeed;  // Tốc độ hiển thị từng chữ
     public bool playerIsClose;  // Kiểm tra xem người chơi có đang ở gần hay không
@@ -32,6 +34,7 @@ public class NPC : MonoBehaviour
 
     private void Awake()
     {
+        Heal = GetComponent<PlayerHealth>();
         animator = GetComponent<Animator>();
     }
 
@@ -135,7 +138,7 @@ public class NPC : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.E) && playerIsClose)
+        if (Input.GetKeyDown(KeyCode.F) && playerIsClose)
         {
             if (DialoguePanel.activeInHierarchy)
             {
@@ -242,6 +245,8 @@ public class NPC : MonoBehaviour
             zeroText();  // Đặt lại văn bản khi hết dòng đối thoại
             this.enabled = false;
         }
+        QuestionMask.SetActive(false);
+        Heal.ApplyHeal();
     }
 
     public void OnTriggerEnter2D(Collider2D other)
