@@ -26,7 +26,6 @@ public class MenuPlay : MonoBehaviour
         gameplayData.login = false;
         gameplayData.userId = 0;
         gameplayData.UserName = string.Empty;
-        gameplayData.PassWord = string.Empty;
     }
     public void exit()
     {

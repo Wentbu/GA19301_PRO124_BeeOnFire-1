@@ -61,7 +61,7 @@ public class LoginWeb : Singleton<LoginWeb>
             loginStatus.text = "Đăng nhập thành công!";
             gameplayData.userId = responseData.User_Id;
             gameplayData.UserName = Value.Instance.GetUser();
-            gameplayData.PassWord = Value.Instance.GetPasword();
+            gameplayData.login = true;
         }
         else
         {

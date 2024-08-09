@@ -5,8 +5,6 @@ using UnityEngine;
 public class GamePlay : ScriptableObject
 {
     public string UserName;
-    public string PassWord;
-
     public int levelId;
     public int userId;
     public DateTime starTime;
