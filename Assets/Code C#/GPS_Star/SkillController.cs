@@ -1,9 +1,10 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class SkillActivator : MonoBehaviour
 {
-    public GameObject expanderPrefab; // Prefab cho NewBehaviourScript
+    public GameObject expanderPrefab; // Prefab cho ColliderExpander
     public GameObject aiControllerPrefab; // Prefab cho AiController
     public KeyCode activationKey = KeyCode.Q; // Nút nhấn để kích hoạt skill
 
@@ -22,36 +23,45 @@ public class SkillActivator : MonoBehaviour
 
     public void ActivateFunction()
     {
-        // Tạo instance của prefab expander và gắn nó theo player
-        GameObject expander = Instantiate(expanderPrefab, transform.position, Quaternion.identity);
-        expander.transform.SetParent(transform);
-        expander.SetActive(true);
-        Debug.Log("Tạo và kích hoạt NewBehaviourScript: " + expander.name);
-
-        // Tạo instance của prefab AiController
-        GameObject aiController = Instantiate(aiControllerPrefab, transform.position, Quaternion.identity);
-        aiController.SetActive(true);
-        Debug.Log("Tạo và kích hoạt AiController: " + aiController.name);
-
-        // Gán AiController cho NewBehaviourScript nếu cần
-        NewBehaviourScript newBehaviourScript = expander.GetComponent<NewBehaviourScript>();
-        AiController aiControllerComponent = aiController.GetComponent<AiController>();
-        if (newBehaviourScript != null && aiControllerComponent != null)
+        if (expanderPrefab == null || aiControllerPrefab == null)
         {
-            newBehaviourScript.SetAiController(aiControllerComponent);
-            Debug.Log("Gán AiController cho NewBehaviourScript");
+            Debug.LogError("Prefab không được chỉ định.");
+            return;
+        }
+
+        // Tạo instance của prefab expander tại vị trí của player
+        Vector3 playerPosition = transform.position; // Vị trí của player
+        GameObject expander = Instantiate(expanderPrefab, playerPosition, Quaternion.identity);
+        Debug.Log("Tạo và kích hoạt ColliderExpander tại: " + playerPosition);
+
+        // Tạo instance của prefab AiController tại vị trí của player
+        GameObject aiController = Instantiate(aiControllerPrefab, playerPosition, Quaternion.identity);
+        Debug.Log("Tạo và kích hoạt AiController tại: " + playerPosition);
+
+        // Gán AiController cho ColliderExpander
+        ColliderExpander colliderExpander = expander.GetComponent<ColliderExpander>();
+        AiController aiControllerComponent = aiController.GetComponent<AiController>();
+
+        if (colliderExpander != null && aiControllerComponent != null)
+        {
+            colliderExpander.SetAiController(aiControllerComponent);
+            Debug.Log("Gán AiController cho ColliderExpander");
         }
         else
         {
-            Debug.LogError("Không tìm thấy NewBehaviourScript hoặc AiController");
+            if (colliderExpander == null)
+                Debug.LogError("Không tìm thấy ColliderExpander trong prefab!");
+
+            if (aiControllerComponent == null)
+                Debug.LogError("Không tìm thấy AiController trong prefab!");
         }
 
-        // Hủy expander và aiController sau 10 giây
-        Destroy(expander, 30.0f);
-        Destroy(aiController, 30.0f);
+        // Hủy expander và aiController sau thời gian đã định
+        Destroy(expander, cooldownDuration);
+        Destroy(aiController, cooldownDuration);
 
         // Bắt đầu đếm ngược thời gian hồi skill
-        Debug.Log("Bắt đầu đếm thời gian");
+        Debug.Log("Bắt đầu đếm thời gian hồi skill");
         StartCoroutine(CooldownRoutine());
     }
 
