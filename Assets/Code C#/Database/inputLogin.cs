@@ -1,5 +1,7 @@
 ﻿using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
+using static UnityEngine.Rendering.DebugUI;
 
 public class inputLogin : MonoBehaviour
 {
@@ -11,6 +13,14 @@ public class inputLogin : MonoBehaviour
 
     [SerializeField] private GamePlay dataGameplay;
 
+    [SerializeField] private Toggle visibilityLoginToggle;
+    [SerializeField] private Toggle visibilityRegisterToggle;
+
+    [SerializeField] private Image loginCheckmark;
+    [SerializeField] private Image registerCheckmark;
+
+    [SerializeField] private Sprite showPasswordImage;
+    [SerializeField] private Sprite hidePasswordImage;
     public void GetValueLogin()
     {
         if (userLogin.text.Trim().Length == 0) return;
@@ -35,6 +45,80 @@ public class inputLogin : MonoBehaviour
         else
         {
             LoginWeb.Instance.registerStatus.text = "Mật khẩu không trùng khớp";
+        }
+    }
+
+    void Start()
+    {
+        visibilityLoginToggle.onValueChanged.AddListener(OnToggleLoginChanged);
+        visibilityRegisterToggle.onValueChanged.AddListener(OnToggleRegisterChanged);
+        // Thiết lập hình ảnh ban đầu của Toggle
+        UpdateLoginToggleImage();
+        UpdateRegisterToggleImage();
+    }
+
+    void OnToggleLoginChanged(bool isOn)
+    {
+        // Thay đổi contentType của TMP_InputField
+        if (isOn)
+        {
+            passwordLogin.contentType = TMP_InputField.ContentType.Standard;
+        }
+        else
+        {
+            passwordLogin.contentType = TMP_InputField.ContentType.Password;
+        }
+
+        // Cập nhật lại TMP_InputField để thay đổi có hiệu lực
+        passwordLogin.ForceLabelUpdate();
+
+        // Cập nhật hình ảnh của Toggle
+        UpdateLoginToggleImage();
+    }
+    void UpdateLoginToggleImage()
+    {
+
+        if (visibilityLoginToggle.isOn == true)
+        {
+            loginCheckmark.sprite = showPasswordImage;
+        }
+        else
+        {
+            loginCheckmark.sprite = hidePasswordImage;
+        }
+    }
+
+    void OnToggleRegisterChanged(bool isOn)
+    {
+        // Thay đổi contentType của TMP_InputField
+        if (isOn)
+        {
+            passwordRegister.contentType = TMP_InputField.ContentType.Standard;
+            passwordRegister2.contentType = TMP_InputField.ContentType.Standard;
+        }
+        else
+        {
+            passwordRegister.contentType = TMP_InputField.ContentType.Password;
+            passwordRegister2.contentType = TMP_InputField.ContentType.Password;
+        }
+
+        // Cập nhật lại TMP_InputField để thay đổi có hiệu lực
+        passwordLogin.ForceLabelUpdate();
+
+        // Cập nhật hình ảnh của Toggle
+        UpdateRegisterToggleImage();
+    }
+
+    void UpdateRegisterToggleImage()
+    {
+
+        if (visibilityLoginToggle.isOn == true)
+        {
+            registerCheckmark.sprite = showPasswordImage;
+        }
+        else
+        {
+            registerCheckmark.sprite = hidePasswordImage;
         }
     }
 }
