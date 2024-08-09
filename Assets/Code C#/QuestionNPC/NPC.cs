@@ -25,8 +25,6 @@ public class NPC : MonoBehaviour
     public Sprite correctAnswerSprite;  // Hình dấu tích
     public Sprite incorrectAnswerSprite;  // Hình dấu X
 
-    [SerializeField] TeacherChasePlayer Chase;
-
     private Coroutine hideDialogueCoroutine; // Coroutine để tự động ẩn bảng đối thoại
     private int randomQuestionIndex;  // Chỉ số của câu hỏi ngẫu nhiên
 
@@ -39,7 +37,6 @@ public class NPC : MonoBehaviour
 
     void Start()
     {
-        Chase = GetComponent<TeacherChasePlayer>();
         DialoguePanel.SetActive(false);  // Ẩn bảng đối thoại
         continueButton.SetActive(false);  // Ẩn nút tiếp tục
         isTyping = false;  // Đặt cờ isTyping thành false
@@ -243,7 +240,6 @@ public class NPC : MonoBehaviour
         else
         {
             zeroText();  // Đặt lại văn bản khi hết dòng đối thoại
-            Chase.enabled = false;
             this.enabled = false;
         }
     }

@@ -331,6 +331,7 @@ GameObject:
   - component: {fileID: 132446759973527213}
   - component: {fileID: 4625295580294011441}
   - component: {fileID: 4117938818352152822}
+  - component: {fileID: 7791248533786612955}
   m_Layer: 0
   m_Name: Book
   m_TagString: Untagged
@@ -398,7 +399,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -837833545
-  m_SortingLayer: 7
+  m_SortingLayer: 8
   m_SortingOrder: 1
   m_Sprite: {fileID: -1422853455, guid: 9376c3cf02db27d45b164b30b8ee5cc2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -511,12 +512,25 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.57
+--- !u!114 &7791248533786612955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6716698096532573638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70508dd8451cf014cac9943a03839cf5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isGoodBook: 1
 --- !u!1 &6818275391112874690
 GameObject:
   m_ObjectHideFlags: 0
