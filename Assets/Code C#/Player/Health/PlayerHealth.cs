@@ -72,6 +72,7 @@ public class PlayerHealth : MonoBehaviour
         else
         {
             Debug.Log("🛑 Không thể hồi máu, sức khỏe đã đầy!");
+            currentHealth = maxHealth;
         }
     }
 
