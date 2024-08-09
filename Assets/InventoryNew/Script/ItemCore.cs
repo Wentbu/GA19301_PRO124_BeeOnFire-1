@@ -7,6 +7,6 @@ public class ItemCore : MonoBehaviour
 }
 public interface IUsableItem
 {
-    void Use(PlayerController player);
+    void Use(PlayerControl player);
 }
 
