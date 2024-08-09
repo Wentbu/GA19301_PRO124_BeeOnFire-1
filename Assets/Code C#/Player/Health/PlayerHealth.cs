@@ -3,33 +3,45 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
-    [Header("PlayerHealth")]
-    private int currentHealth;
+    [Header("Health Settings")]
     [SerializeField] private int maxHealth = 100;
+    [SerializeField] private int initialHealth = 0;
     [SerializeField] private HealthUI healthBar;
-    [SerializeField] private int healAmount;
-    [SerializeField] private int damageAmount;
 
+    [Header("Heal Settings")]
+    [SerializeField] private int healAmount = 10;
+    [SerializeField] private float healCooldown = 1f;
+
+    [Header("Damage Settings")]
+    [SerializeField] private int damageAmount = 5;
+    [SerializeField] private float damageCooldown = 0.5f;
+
+    [Header("Effects")]
     [SerializeField] private GameObject normalBookEffect;
     [SerializeField] private GameObject badBookEffect;
     [SerializeField] private GameObject explosionEffect;
 
     public static event Action<float> OnHealthChanged;
 
+    private int currentHealth;
+    private float lastHealTime;
+    private float lastDamageTime;
 
     private void Awake()
     {
-        currentHealth = 0;
+        InitializeHealth();
+    }
+
+    private void InitializeHealth()
+    {
+        currentHealth = Mathf.Clamp(initialHealth, 0, maxHealth);
         healthBar.Initialize(maxHealth, currentHealth);
         healthBar.OnHealthChanged += HandleHealthUIChanged;
     }
 
     private void OnDestroy()
     {
-        if (healthBar != null)
-        {
-            healthBar.OnHealthChanged -= HandleHealthUIChanged;
-        }
+        healthBar.OnHealthChanged -= HandleHealthUIChanged;
     }
 
     private void HandleHealthUIChanged(float healthPercentage)
@@ -38,14 +50,42 @@ public class PlayerHealth : MonoBehaviour
 
         if (healthBar.IsCriticalHealth())
         {
-            Debug.Log("Cảnh báo: Sức khỏe người chơi rất thấp!");
-            // Thêm logic xử lý khi sức khỏe ở mức nguy hiểm
+            Debug.Log("⚠️ Cảnh báo: Sức khỏe người chơi rất thấp!");
         }
-
-        if (healthBar.IsFullHealth())
+        else if (healthBar.IsFullHealth())
         {
-            Debug.Log("Người chơi đã hồi phục hoàn toàn!");
-            // Thêm logic xử lý khi sức khỏe đầy
+            Debug.Log("🎉 Người chơi đã hồi phục hoàn toàn!");
+        }
+    }
+
+    public void ApplyHeal()
+    {
+        if (Time.time - lastHealTime < healCooldown) return;
+
+        int actualHeal = Mathf.Min(healAmount, maxHealth - currentHealth);
+        if (actualHeal > 0)
+        {
+            ModifyHealth(actualHeal);
+            lastHealTime = Time.time;
+            Debug.Log($"💚 Người chơi được hồi {actualHeal} máu. Máu hiện tại: {currentHealth}/{maxHealth}");
+        }
+        else
+        {
+            Debug.Log("🛑 Không thể hồi máu, sức khỏe đã đầy!");
+        }
+    }
+
+    public void ApplyDamage()
+    {
+        if (Time.time - lastDamageTime < damageCooldown) return;
+
+        ModifyHealth(-damageAmount);
+        lastDamageTime = Time.time;
+        Debug.Log($"❤️ Người chơi nhận {damageAmount} sát thương. Máu hiện tại: {currentHealth}/{maxHealth}");
+
+        if (currentHealth <= 0)
+        {
+            currentHealth = 0;
         }
     }
 
@@ -53,7 +93,6 @@ public class PlayerHealth : MonoBehaviour
     {
         currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
         healthBar.SetHealth(currentHealth);
-        OnHealthChanged?.Invoke((float)currentHealth / maxHealth);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -63,9 +102,6 @@ public class PlayerHealth : MonoBehaviour
             interactable.Interact(this);
         }
     }
-
-    public void ApplyHeal() => ModifyHealth(healAmount);
-    public void ApplyDamage() => ModifyHealth(-damageAmount);
 
     public void SpawnEffect(EffectType effectType)
     {
@@ -81,39 +117,5 @@ public class PlayerHealth : MonoBehaviour
         {
             Instantiate(effectPrefab, transform.position, Quaternion.identity);
         }
-    }
-}
-
-public enum EffectType
-{
-    NormalBook,
-    BadBook,
-    Explosion
-}
-
-public interface IInteractable
-{
-    void Interact(PlayerHealth healthManager);
-}
-
-public class Book : MonoBehaviour, IInteractable
-{
-    [SerializeField] private bool isGoodBook;
-
-    public void Interact(PlayerHealth healthManager)
-    {
-        if (isGoodBook)
-        {
-            healthManager.ApplyHeal();
-            healthManager.SpawnEffect(EffectType.NormalBook);
-        }
-        else
-        {
-            healthManager.ApplyDamage();
-            healthManager.SpawnEffect(EffectType.BadBook);
-        }
-
-        healthManager.SpawnEffect(EffectType.Explosion);
-        Destroy(gameObject);
     }
 }

@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
-using System.Collections.Generic;
 using System.Collections;
 using UnityEngine.UI;
 
@@ -15,8 +14,6 @@ public class PlayerControl : MonoBehaviour
     private float moveSpeed;
     [SerializeField] private float maxSpeed = 5f;
     [SerializeField] private float acceleration = 50f;
-    [SerializeField] private float deceleration = 100f;
-    [SerializeField] private float velocityPower = 0.9f;
     [SerializeField] private float frictionAmount = 0.2f;
 
     [Header("NPC Interaction")]
@@ -24,13 +21,18 @@ public class PlayerControl : MonoBehaviour
 
     [Header("Buff Settings")]
     [SerializeField] private Coroutine buffSpeedCoroutine;
-    [SerializeField] private Coroutine debuffSpeedCoroutine;
     [SerializeField] private Coroutine blinkCoroutine;
     [SerializeField] float buffDuration = 5f;
     [SerializeField] float blinkDuration = 2f;
-    [SerializeField] private float debuffDuration = 5f; // Thời gian giảm tốc độ
     [SerializeField] Image buffSpeedIcon; // Icon cho buff
     [SerializeField] private GameObject shadowPrefab; // Prefab cho bóng mờ
+
+    [Header("Debuff Settings")]
+    [SerializeField] private float debuffDuration = 5f; // Thời gian giảm tốc độ
+    [SerializeField] private float debuffPercentage = 0.5f; // Phần trăm giảm tốc độ (50%)
+    [SerializeField] private Image debuffSpeedIcon; // Icon cho debuff
+    private bool isDebuffed = false;
+    private Coroutine debuffCoroutine;
 
     private Vector2 movement;
     private Vector2 smoothedMovement;
@@ -70,8 +72,13 @@ public class PlayerControl : MonoBehaviour
 
     private void Move()
     {
+        // Giới hạn tốc độ tối đa
+        rb2d.velocity = Vector2.ClampMagnitude(rb2d.velocity, maxSpeed);
+
+        float currentMaxSpeed = isDebuffed ? maxSpeed * debuffPercentage : maxSpeed;
+
         // Tính toán vận tốc tối đa
-        Vector2 targetVelocity = smoothedMovement * maxSpeed;
+        Vector2 targetVelocity = smoothedMovement * currentMaxSpeed;
 
         // Tính toán vận tốc hiện tại và tối đa
         Vector2 velocityDiff = targetVelocity - rb2d.velocity;
@@ -81,9 +88,7 @@ public class PlayerControl : MonoBehaviour
 
         // Áp dụng lực vào Rigidbody2D
         rb2d.AddForce(accelerationForce);
-
-        // Giới hạn tốc độ tối đa
-        rb2d.velocity = Vector2.ClampMagnitude(rb2d.velocity, maxSpeed);
+        rb2d.velocity = Vector2.ClampMagnitude(rb2d.velocity, currentMaxSpeed);
     }
 
     private void ApplyFriction()
@@ -197,16 +202,43 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
-    public void ApplySick()
+    public void ApplyDebuffSpeed()
     {
-        StartCoroutine(PlayerSick());
+        if (debuffCoroutine != null)
+        {
+            StopCoroutine(debuffCoroutine);
+        }
+        debuffCoroutine = StartCoroutine(DebuffSpeedCoroutine());
     }
 
-    private IEnumerator PlayerSick()
+    private IEnumerator DebuffSpeedCoroutine()
     {
-        float buffSpeedDecrease = maxSpeed * 0.25f;
-        moveSpeed = maxSpeed - buffSpeedDecrease;
-        yield return new WaitForSeconds(10f);
-        moveSpeed = maxSpeed;
+        isDebuffed = true;
+        StartCoroutine(CreateDebuffEffect(debuffDuration));
+        float originalSpeed = moveSpeed;
+        moveSpeed *= debuffPercentage; // Giảm tốc độ
+
+        yield return new WaitForSeconds(debuffDuration);
+
+        // Khôi phục tốc độ
+        moveSpeed = originalSpeed;
+        isDebuffed = false;
+
+        debuffCoroutine = null;
+    }
+
+    private IEnumerator CreateDebuffEffect(float duration)
+    {
+        float endTime = Time.time + duration;
+        SpriteRenderer playerSprite = GetComponent<SpriteRenderer>();
+        Color originalColor = playerSprite.color;
+
+        while (Time.time < endTime)
+        {
+            playerSprite.color = Color.Lerp(originalColor, Color.gray, Mathf.PingPong(Time.time * 2, 1));
+            yield return null;
+        }
+
+        playerSprite.color = originalColor;
     }
 }

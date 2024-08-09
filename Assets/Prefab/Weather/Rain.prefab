@@ -4796,7 +4796,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1097679131
-  m_SortingLayer: 15
+  m_SortingLayer: 17
   m_SortingOrder: 10
   m_RenderMode: 0
   m_MeshDistribution: 0
@@ -5057,6 +5057,8 @@ MonoBehaviour:
   uiFill: {fileID: 8042149487798252854}
   sickIcon: {fileID: 0}
   underRainBar: {fileID: 8930383313332521199}
+  playerControl: {fileID: 0}
+  ReduceHT: {fileID: 0}
 --- !u!61 &3817424713144061302
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -5173,7 +5175,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1097679131
-  m_SortingLayer: 15
+  m_SortingLayer: 17
   m_SortingOrder: 300
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0.43673104, g: 0.53552043, b: 0.76729554, a: 0.5176471}
@@ -10093,7 +10095,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1097679131
-  m_SortingLayer: 15
+  m_SortingLayer: 17
   m_SortingOrder: 300
   m_RenderMode: 0
   m_MeshDistribution: 0
@@ -10159,8 +10161,8 @@ RectTransform:
   - {fileID: 5366244839566260147}
   m_Father: {fileID: 4937752046085600142}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 859.9999, y: 291}
-  m_SizeDelta: {x: 98.288, y: 101.712}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -24.856018, y: -26.144043}
+  m_SizeDelta: {x: 98.287964, y: 101.711975}
+  m_Pivot: {x: 1, y: 1}
