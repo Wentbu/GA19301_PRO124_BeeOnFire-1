@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class NPC : MonoBehaviour
 {
     public GameObject DialoguePanel;  // Bảng đối thoại
@@ -34,7 +35,6 @@ public class NPC : MonoBehaviour
 
     private void Awake()
     {
-        Heal = GetComponent<PlayerHealth>();
         animator = GetComponent<Animator>();
     }
 
