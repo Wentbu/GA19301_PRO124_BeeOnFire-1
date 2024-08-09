@@ -216,9 +216,7 @@ public class BullyController : MonoBehaviour
 
     private void SetIdleState()
     {
-        currentState = BullyState.Idle;
-        movement = Vector2.zero;
-        UpdateAnimation();
+        ResetBully();
     }
 
     private void MoveTowardsPredictedPosition()

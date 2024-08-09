@@ -24,7 +24,7 @@ public class PrefabUmbrella : MonoBehaviour
 
         attachedUmbrella = Instantiate(umbrellaPrefab, Adam_Player.transform);
         attachedUmbrella.transform.localPosition = new Vector3(-0.5f, 0.6f, 0);
-        //underRain.SetUmbrellaState(true);
+        underRain.SetUmbrellaState(true);
 
         if (umbrellaCoroutine != null)
         {
@@ -54,7 +54,7 @@ public class PrefabUmbrella : MonoBehaviour
         if (attachedUmbrella != null)
         {
             Destroy(attachedUmbrella);
-            //underRain.SetUmbrellaState(false); // Thiết lập trạng thái không có dù
+            underRain.SetUmbrellaState(false); // Thiết lập trạng thái không có dù
         }
     }
 }
