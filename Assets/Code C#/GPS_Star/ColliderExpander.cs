@@ -34,7 +34,7 @@ public class ColliderExpander : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         // Kiểm tra nếu collider va chạm với vật phẩm có tag "Sach" và đang mở rộng
-        if (other.CompareTag("Book") && isExpanding)
+        if (other.CompareTag("Sach") && isExpanding)
         {
             firstBookPosition = other.transform.position;
             isExpanding = false; // Dừng việc mở rộng collider

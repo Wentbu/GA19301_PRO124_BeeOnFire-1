@@ -37,14 +37,14 @@ public class NewBehaviourScript : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         // Kiểm tra nếu collider chạm vào vật phẩm có tag "GPS"
-        //if (other.CompareTag("GPS") && !hasCollidedWithGPS)
-        //{
-        //    hasCollidedWithGPS = true; // Đánh dấu là đã chạm vào vật phẩm GPS
-        //    Debug.Log("Nhặt được vật phẩm GPS! Bắt đầu mở rộng collider.");
-        //}
+        if (other.CompareTag("GPS") && !hasCollidedWithGPS)
+        {
+            hasCollidedWithGPS = true; // Đánh dấu là đã chạm vào vật phẩm GPS
+            Debug.Log("Nhặt được vật phẩm GPS! Bắt đầu mở rộng collider.");
+        }
 
-        // Kiểm tra nếu collider chạm vào vật phẩm có tag "Book"
-        if (other.CompareTag("Book") && hasCollidedWithGPS && !hasCollidedWithHealth)
+        // Kiểm tra nếu collider chạm vào vật phẩm có tag "Sach"
+        if (other.CompareTag("Sach") && hasCollidedWithGPS && !hasCollidedWithHealth)
         {
             hasCollidedWithHealth = true; // Đánh dấu là đã chạm vào vật phẩm sách
             Debug.Log("Chạm vào vật phẩm sách! Vị trí: " + other.transform.position); // Thông báo và in ra vị trí
