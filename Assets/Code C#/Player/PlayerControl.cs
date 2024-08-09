@@ -30,7 +30,6 @@ public class PlayerControl : MonoBehaviour
     [Header("Debuff Settings")]
     [SerializeField] private float debuffDuration = 5f; // Thời gian giảm tốc độ
     [SerializeField] private float debuffPercentage = 0.5f; // Phần trăm giảm tốc độ (50%)
-    [SerializeField] private Image debuffSpeedIcon; // Icon cho debuff
     private bool isDebuffed = false;
     private Coroutine debuffCoroutine;
 
@@ -237,21 +236,11 @@ public class PlayerControl : MonoBehaviour
         float originalSpeed = moveSpeed;
         moveSpeed *= debuffPercentage; // Giảm tốc độ
 
-        if (debuffSpeedIcon != null)
-        {
-            debuffSpeedIcon.gameObject.SetActive(true);
-        }
-
         yield return new WaitForSeconds(debuffDuration);
 
         // Khôi phục tốc độ
         moveSpeed = originalSpeed;
         isDebuffed = false;
-
-        if (debuffSpeedIcon != null)
-        {
-            debuffSpeedIcon.gameObject.SetActive(false);
-        }
 
         debuffCoroutine = null;
     }
