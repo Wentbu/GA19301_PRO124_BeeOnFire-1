@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -6,12 +7,12 @@ public class MenuPlay : MonoBehaviour
     [SerializeField] private GamePlay gamePlayData;
     [SerializeField] private GameObject panelLogin;
     [SerializeField] private GameObject groupButtonMenu;
-    [SerializeField] private GamePlay gameplayData;
     public void playGame()
     {
         if (gamePlayData.login == true)
         {
-            gameplayData.levelId = Random.Range(1, 4);
+            gamePlayData.levelId = UnityEngine.Random.Range(1, 4);
+            gamePlayData.starTime = DateTime.Now;
             SceneManager.LoadScene(gamePlayData.levelId);
         }
         else
@@ -23,9 +24,9 @@ public class MenuPlay : MonoBehaviour
 
     public void logOut()
     {
-        gameplayData.login = false;
-        gameplayData.userId = 0;
-        gameplayData.UserName = string.Empty;
+        gamePlayData.login = false;
+        gamePlayData.userId = 0;
+        gamePlayData.UserName = string.Empty;
     }
     public void exit()
     {
@@ -35,5 +36,10 @@ public class MenuPlay : MonoBehaviour
     public void GetData()
     {
         LoginWeb.Instance.GetData();
+    }
+
+    public void testend()
+    {
+        SceneManager.LoadScene("CutScenes");
     }
 }
