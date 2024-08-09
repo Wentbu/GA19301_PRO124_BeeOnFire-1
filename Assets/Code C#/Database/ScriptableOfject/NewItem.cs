@@ -1,7 +1,7 @@
 using UnityEngine;
 
-[System.Serializable]
-public class ItemData : ScriptableObject
+[CreateAssetMenu(fileName = "NewItem", menuName = "ScriptableObjects/NewItem", order = 2)]
+public class NewItem : ScriptableObject
 {
     public int Items_Id;
     public string Items_Name;

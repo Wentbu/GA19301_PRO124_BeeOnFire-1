@@ -1,59 +1,119 @@
+﻿using System;
 using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
-    public int maxHealth = 100;
-    public int currentHealth = 0;
+    [Header("PlayerHealth")]
+    private int currentHealth;
+    [SerializeField] private int maxHealth = 100;
+    [SerializeField] private HealthUI healthBar;
+    [SerializeField] private int healAmount;
+    [SerializeField] private int damageAmount;
 
-    public HealthUI healthBar;
-    public int Heal;
-    public int Damages;
+    [SerializeField] private GameObject normalBookEffect;
+    [SerializeField] private GameObject badBookEffect;
+    [SerializeField] private GameObject explosionEffect;
 
+    public static event Action<float> OnHealthChanged;
 
-    public GameObject NB;
-    public GameObject BB;
-    public GameObject Exp;
 
     private void Awake()
     {
-        healthBar.SetMaxHealth();
+        currentHealth = 0;
+        healthBar.Initialize(maxHealth, currentHealth);
+        healthBar.OnHealthChanged += HandleHealthUIChanged;
     }
 
-    void HealtPlus(int Heal)
+    private void OnDestroy()
     {
-        currentHealth += Heal;
-        healthBar.SetHealth(currentHealth);
-        if (currentHealth >= maxHealth)
+        if (healthBar != null)
         {
-            currentHealth = maxHealth;
+            healthBar.OnHealthChanged -= HandleHealthUIChanged;
         }
     }
 
-    void TakeDamage(int Damages)
+    private void HandleHealthUIChanged(float healthPercentage)
     {
-        currentHealth -= Damages;
-        healthBar.SetHealth(currentHealth);
+        OnHealthChanged?.Invoke(healthPercentage);
 
+        if (healthBar.IsCriticalHealth())
+        {
+            Debug.Log("Cảnh báo: Sức khỏe người chơi rất thấp!");
+            // Thêm logic xử lý khi sức khỏe ở mức nguy hiểm
+        }
+
+        if (healthBar.IsFullHealth())
+        {
+            Debug.Log("Người chơi đã hồi phục hoàn toàn!");
+            // Thêm logic xử lý khi sức khỏe đầy
+        }
+    }
+
+    private void ModifyHealth(int amount)
+    {
+        currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
+        healthBar.SetHealth(currentHealth);
+        OnHealthChanged?.Invoke((float)currentHealth / maxHealth);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-
-        if (collision.gameObject.tag == "books")
+        if (collision.TryGetComponent(out IInteractable interactable))
         {
-            HealtPlus(Heal);
-            Destroy(collision.gameObject);
-            Instantiate(NB, transform.position, Quaternion.identity);
-            Instantiate(Exp, transform.position, Quaternion.identity);
+            interactable.Interact(this);
+        }
+    }
+
+    public void ApplyHeal() => ModifyHealth(healAmount);
+    public void ApplyDamage() => ModifyHealth(-damageAmount);
+
+    public void SpawnEffect(EffectType effectType)
+    {
+        GameObject effectPrefab = effectType switch
+        {
+            EffectType.NormalBook => normalBookEffect,
+            EffectType.BadBook => badBookEffect,
+            EffectType.Explosion => explosionEffect,
+            _ => null
+        };
+
+        if (effectPrefab != null)
+        {
+            Instantiate(effectPrefab, transform.position, Quaternion.identity);
+        }
+    }
+}
+
+public enum EffectType
+{
+    NormalBook,
+    BadBook,
+    Explosion
+}
+
+public interface IInteractable
+{
+    void Interact(PlayerHealth healthManager);
+}
+
+public class Book : MonoBehaviour, IInteractable
+{
+    [SerializeField] private bool isGoodBook;
+
+    public void Interact(PlayerHealth healthManager)
+    {
+        if (isGoodBook)
+        {
+            healthManager.ApplyHeal();
+            healthManager.SpawnEffect(EffectType.NormalBook);
+        }
+        else
+        {
+            healthManager.ApplyDamage();
+            healthManager.SpawnEffect(EffectType.BadBook);
         }
 
-        if (collision.gameObject.tag == "danger")
-        {
-            TakeDamage(Damages);
-            Destroy(collision.gameObject);
-            Instantiate(BB, transform.position, Quaternion.identity);
-            Instantiate(Exp, transform.position, Quaternion.identity);
-        }
-
+        healthManager.SpawnEffect(EffectType.Explosion);
+        Destroy(gameObject);
     }
 }

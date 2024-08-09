@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "MiniGame", menuName = "MiniGameData")]
+[CreateAssetMenu(fileName = "MiniGame", menuName = "ScriptableObjects/MiniGameData")]
 public class MiniGame : ScriptableObject
 {
     public int gameplayId;

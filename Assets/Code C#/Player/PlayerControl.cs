@@ -233,8 +233,8 @@ public class PlayerControl : MonoBehaviour
 
     private IEnumerator PlayerSick()
     {
-        float buffSpeedIncrease = maxSpeed * 0.25f;
-        moveSpeed = maxSpeed - buffSpeedIncrease;
+        float buffSpeedDecrease = maxSpeed * 0.25f;
+        moveSpeed = maxSpeed - buffSpeedDecrease;
         yield return new WaitForSeconds(10f);
         moveSpeed = maxSpeed;
     }
