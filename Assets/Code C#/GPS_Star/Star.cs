@@ -18,7 +18,7 @@ public class Star : MonoBehaviour
         aiController = FindObjectOfType<AiController>(); // Tìm đối tượng AiController trong Scene
 
         // Thiết lập mục tiêu ban đầu cho AI là sách
-        GameObject sachObject = GameObject.FindWithTag("Book");
+        GameObject sachObject = GameObject.FindWithTag("Sach");
         if (sachObject != null)
         {
             aiController.SetTarget(sachObject.transform);

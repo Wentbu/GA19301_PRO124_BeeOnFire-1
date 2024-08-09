@@ -62,6 +62,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using Pathfinding;
+using System;
 
 namespace Pathfinding
 {
@@ -79,6 +80,10 @@ namespace Pathfinding
         private bool isWaiting = false;
         [SerializeField] public float entryTime;
         [SerializeField] public float knockbackForce;
+        [SerializeField] public float maxSpeed = 10f; // Base max speed
+        [SerializeField] public float debuffPercentage = 0.5f; // Speed debuff percentage
+        [SerializeField] public float acceleration = 5f; // Acceleration force
+
 
         private int index = 0;
         private IAstarAI agent;
@@ -89,6 +94,8 @@ namespace Pathfinding
         private float originalSpeed;
         private bool isStoppingAtIntersection = false;
         private Rigidbody2D rb;
+        private PlayerControl player;
+        [SerializeField] private LayerMask playerLayer; // Set this to the layer of the player
 
         [SerializeField] public SpriteSet currentSpriteSet;
         [SerializeField] public AnimationSet currentAnimationSet;
@@ -103,6 +110,8 @@ namespace Pathfinding
         protected override void Awake()
         {
             base.Awake();
+            rb = GetComponent<Rigidbody2D>();
+            player = GetComponent<PlayerControl>();
             agent = GetComponent<IAstarAI>();
             seeker = GetComponent<Seeker>();
             animator = GetComponent<Animator>();
@@ -175,12 +184,12 @@ namespace Pathfinding
             {
                 if (currentVelocity.x > 0)
                 {
-                    Debug.Log("Right");
+                    //Debug.Log("Right");
                     UpdateCarState(currentSpriteSet.rightSprite, currentAnimationSet.rightClip.name, leftRightCarColliderConfig);
                 }
                 else if (currentVelocity.x < 0)
                 {
-                    Debug.Log("Left");
+                    //Debug.Log("Left");
                     UpdateCarState(currentSpriteSet.leftSprite, currentAnimationSet.leftClip.name, leftRightCarColliderConfig);
                 }
             }
@@ -188,12 +197,12 @@ namespace Pathfinding
             {
                 if (currentVelocity.y > 0)
                 {
-                    Debug.Log("Up");
+                    //Debug.Log("Up");
                     UpdateCarState(currentSpriteSet.upSprite, currentAnimationSet.upClip.name, upDownCarColliderConfig);
                 }
                 else if (currentVelocity.y < 0)
                 {
-                    Debug.Log("Down");
+                    //Debug.Log("Down");
                     UpdateCarState(currentSpriteSet.downSprite, currentAnimationSet.downClip.name, upDownCarColliderConfig);
                 }
             }
@@ -307,7 +316,14 @@ namespace Pathfinding
                 otherRb.AddForce(-knockbackDirection * knockbackForce, ForceMode2D.Impulse);
             }
         }
+        private bool IsPlayer(GameObject obj)
+        {
+            // Check if the object has a Player tag or is in the playerLayer
+            return obj.CompareTag("Player") || (playerLayer == (playerLayer | (1 << obj.layer)));
+        }
+
     }
+}
     
     [System.Serializable]
     public class CarColliderConfig
@@ -333,6 +349,5 @@ namespace Pathfinding
         [SerializeField] public AnimationClip upClip;
         [SerializeField] public AnimationClip downClip;
     }
-}
 
 

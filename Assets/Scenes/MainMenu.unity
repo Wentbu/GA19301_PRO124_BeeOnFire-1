@@ -383,7 +383,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -1782166422, guid: e5a4910521083cf42b8dd8f13b682712, type: 3}
+  m_Sprite: {fileID: 1515990969, guid: e4ad56a4a4b4f32479edcac52328afbc, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5671,7 +5671,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &764763599
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5685,7 +5685,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetObject: {fileID: 8097301611714122729}
-  toggleInterval: 15
+  delay: 30
 --- !u!4 &764763600
 Transform:
   m_ObjectHideFlags: 0
@@ -6143,14 +6143,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.97941285, g: 1, b: 0.13396227, a: 1}
+  m_Color: {r: 1, g: 0.78999233, b: 0.09019607, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 243285433, guid: 832d242432615b74a8406b05978eb871, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -7693,7 +7693,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 1.2449951, y: -120.42499}
+  m_AnchoredPosition: {x: 1.2451172, y: -120.42505}
   m_SizeDelta: {x: -663.378, y: -463.969}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1084730035
@@ -7716,8 +7716,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 0}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -41923,12 +41923,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06530898caa681b47afc051ab921ee58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rainDuration: 10
+  inRainDuration: 10
   isSick: 0
   uiFill: {fileID: 8042149489143646574}
   sickIcon: {fileID: 0}
   underRainBar: {fileID: 8930383311993320631}
   playerControl: {fileID: 0}
+  ReduceHT: {fileID: 0}
 --- !u!4 &6276835146497568134
 Transform:
   m_ObjectHideFlags: 0

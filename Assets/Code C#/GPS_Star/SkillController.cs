@@ -8,7 +8,7 @@ public class SkillActivator : MonoBehaviour
     public KeyCode activationKey = KeyCode.Q; // Nút nhấn để kích hoạt skill
 
     private bool canActivate = true; // Biến kiểm tra có thể kích hoạt skill hay không
-    private float cooldownDuration = 6f; // Thời gian hồi skill
+    private float cooldownDuration = 30f; // Thời gian hồi skill
 
     private void Update()
     {
@@ -47,8 +47,8 @@ public class SkillActivator : MonoBehaviour
         }
 
         // Hủy expander và aiController sau 10 giây
-        Destroy(expander, 30.0f);
-        Destroy(aiController, 30.0f);
+        Destroy(expander, 10.0f);
+        Destroy(aiController, 10.0f);
 
         // Bắt đầu đếm ngược thời gian hồi skill
         Debug.Log("Bắt đầu đếm thời gian");
