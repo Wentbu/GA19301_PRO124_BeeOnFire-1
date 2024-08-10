@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.VFX;
 
 public class PlayerControl : MonoBehaviour
 {
@@ -20,8 +21,8 @@ public class PlayerControl : MonoBehaviour
 
     [Header("Buff Settings")]
     [SerializeField] private Coroutine buffSpeedCoroutine;
-    [SerializeField] private Coroutine debuffSpeedCoroutine;
     [SerializeField] private Coroutine blinkCoroutine;
+    [SerializeField] private float buffPercentage = 0.5f;
     [SerializeField] float buffDuration = 5f;
     [SerializeField] float blinkDuration = 2f;
     [SerializeField] Image buffSpeedIcon; // Icon cho buff
@@ -39,6 +40,7 @@ public class PlayerControl : MonoBehaviour
 
     private Vector2 movement;
     private Vector2 smoothedMovement;
+    //public VisualEffect vfxRenderer;
 
     private void Awake()
     {
@@ -85,6 +87,8 @@ public class PlayerControl : MonoBehaviour
                 }
             }
         }
+
+        //vfxRenderer.SetVector3("ColliderPos", transform.position);
     }
 
     private void OnMove(InputValue value)
@@ -144,8 +148,8 @@ public class PlayerControl : MonoBehaviour
 
     private IEnumerator BuffSpeedItemCoroutine()
     {
-        float buffSpeedIncrease = maxSpeed * 0.5f; // Tăng 50% so với tốc độ gốc
-        moveSpeed = maxSpeed + buffSpeedIncrease;
+        float buffSpeedIncrease = maxSpeed * buffPercentage; // Tăng 50% so với tốc độ gốc
+        moveSpeed += buffSpeedIncrease;
 
         if (buffSpeedIcon != null)
         {

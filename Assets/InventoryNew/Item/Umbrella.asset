@@ -13,9 +13,8 @@ MonoBehaviour:
   m_Name: Umbrella
   m_EditorClassIdentifier: 
   ItemID: 0
-  type: 1
   actType: 0
   range: {x: 5, y: 4}
   stackable: 1
-  image: {fileID: 0}
-  umbrellaPrefab: {fileID: 0}
+  image: {fileID: 21300000, guid: 7eaba6de3b533f14f83e7c93ae01a7f2, type: 3}
+  umbrellaPrefab: {fileID: 2775441632354202597, guid: c7e70000ef9368c4f89dcddb1a5e59f3, type: 3}

@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
 
@@ -13,16 +12,11 @@ public class AiController : MonoBehaviour
     private Coroutine moveCoroutine;    // Coroutine để di chuyển
     private bool isCalculatingPath = false; // Biến để kiểm tra xem có đang tính toán đường đi hay không
 
-    private ColliderExpander colliderExpander; // Tham chiếu đến script ColliderExpander
-    private Vector3 firstBookPosition;   // Vị trí của quyển sách đầu tiên được chạm vào
-
     void Start()
     {
-        colliderExpander = GetComponent<ColliderExpander>(); // Lấy component ColliderExpander từ AI
         target = null; // Bắt đầu không có mục tiêu để AI không tính toán đường đi
     }
 
-    
     // Phương thức để cập nhật mục tiêu mới và tính toán đường đi
     public void SetTarget(Transform newTarget)
     {
@@ -34,7 +28,6 @@ public class AiController : MonoBehaviour
             CalculatePath();            // Tính toán đường đi tới mục tiêu mới
         }
     }
-
 
     // Phương thức để tính toán đường đi từ vị trí hiện tại đến mục tiêu
     void CalculatePath()
@@ -94,21 +87,14 @@ public class AiController : MonoBehaviour
 
             yield return null;
         }
-
-        // Sau khi đến đích, di chuyển đến vị trí của quyển sách đầu tiên được chạm vào
-        Vector3 firstBookPos = colliderExpander.GetFirstBookPosition();
-        if (firstBookPos != Vector3.zero)
-        {
-            // Tạo một điểm mục tiêu ảo từ vị trí mới
-            GameObject targetObject = new GameObject();
-            targetObject.transform.position = firstBookPos;
-
-            // Truyền transform của đối tượng mục tiêu ảo
-            SetTarget(targetObject.transform);
-
-            // Sau khi sử dụng, hủy đối tượng mục tiêu ảo để tránh rò rỉ bộ nhớ
-            Destroy(targetObject);
-        }
     }
 
+    // Phương thức để cập nhật vị trí mục tiêu bằng Vector3
+    public void SetTargetPosition(Vector3 targetPosition)
+    {
+        GameObject targetObject = new GameObject();  // Tạo đối tượng ảo để làm mục tiêu
+        targetObject.transform.position = targetPosition;
+        SetTarget(targetObject.transform);  // Gọi phương thức SetTarget với transform của đối tượng ảo
+        Destroy(targetObject);  // Hủy đối tượng ảo sau khi hoàn thành
+    }
 }
