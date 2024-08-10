@@ -6,6 +6,7 @@ public class PlayerHealth : MonoBehaviour
     [Header("Health Settings")]
     [SerializeField] private int maxHealth = 100;
     [SerializeField] private int initialHealth = 0;
+    public int currentHealth;
     [SerializeField] private HealthUI healthBar;
 
     [Header("Heal Settings")]
@@ -23,7 +24,6 @@ public class PlayerHealth : MonoBehaviour
 
     public static event Action<float> OnHealthChanged;
 
-    public int currentHealth;
     private float lastHealTime;
     private float lastDamageTime;
 

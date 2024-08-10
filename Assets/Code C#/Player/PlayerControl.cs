@@ -40,7 +40,7 @@ public class PlayerControl : MonoBehaviour
 
     private Vector2 movement;
     private Vector2 smoothedMovement;
-    public VisualEffect vfxRenderer;
+    //public VisualEffect vfxRenderer;
 
     private void Awake()
     {
@@ -88,7 +88,7 @@ public class PlayerControl : MonoBehaviour
             }
         }
 
-        vfxRenderer.SetVector3("ColliderPos", transform.position);
+        //vfxRenderer.SetVector3("ColliderPos", transform.position);
     }
 
     private void OnMove(InputValue value)
