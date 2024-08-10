@@ -60,6 +60,7 @@ GameObject:
   - component: {fileID: 6452674322578120580}
   - component: {fileID: 7437483912353882836}
   - component: {fileID: 5165893512154916362}
+  - component: {fileID: -8169689579204461422}
   m_Layer: 0
   m_Name: Npc1 2
   m_TagString: Untagged
@@ -242,8 +243,8 @@ MonoBehaviour:
     upSprite: {fileID: -407584090, guid: 53fe3a5327ce4b0468a84ebadb791418, type: 3}
     downSprite: {fileID: 1581853377, guid: 53fe3a5327ce4b0468a84ebadb791418, type: 3}
   currentAnimationSet:
-    leftClip: {fileID: 7400000, guid: 51acfee8c5b5cae41ae3c4ddad767141, type: 2}
-    rightClip: {fileID: 7400000, guid: 312cb5a0e1d809344b23ef6014678f66, type: 2}
+    leftClip: {fileID: 7400000, guid: 312cb5a0e1d809344b23ef6014678f66, type: 2}
+    rightClip: {fileID: 7400000, guid: 51acfee8c5b5cae41ae3c4ddad767141, type: 2}
     upClip: {fileID: 7400000, guid: 8fec8b79b748e884386ddf8bc487c684, type: 2}
     downClip: {fileID: 7400000, guid: 50f42671becf92448bc86ee437da0c5c, type: 2}
   leftRightCarColliderConfig:
@@ -314,3 +315,24 @@ CapsuleCollider2D:
   m_Offset: {x: -0.0209198, y: -0.018939972}
   m_Size: {x: 0.4560852, y: 0.628952}
   m_Direction: 0
+--- !u!95 &-8169689579204461422
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6047756415251654484}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b5d7500838bf3224e862adf2fdb06131, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
