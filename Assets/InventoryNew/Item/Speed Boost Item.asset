@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 510da59cf4fb3ff4aa69bb235b274c0d, type: 3}
   m_Name: Speed Boost Item
   m_EditorClassIdentifier: 
-  type: 2
+  ItemID: 0
   actType: 0
   range: {x: 5, y: 4}
   stackable: 1
-  image: {fileID: 21300000, guid: 1477b98c9db06a9419e73e4eb96e25c1, type: 3}
+  image: {fileID: 21300000, guid: 2a1d1d6ffe33e4d4abb424b78be7c275, type: 3}
   speedBoostAmount: 10
   duration: 10
