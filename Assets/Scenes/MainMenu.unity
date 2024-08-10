@@ -5401,9 +5401,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1382099704}
-        m_TargetAssemblyTypeName: MenuPlay, Assembly-CSharp
-        m_MethodName: exit
+      - m_Target: {fileID: 1382099707}
+        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
+        m_MethodName: Quit
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -11189,6 +11189,7 @@ GameObject:
   - component: {fileID: 1382099705}
   - component: {fileID: 1382099704}
   - component: {fileID: 1382099706}
+  - component: {fileID: 1382099707}
   m_Layer: 0
   m_Name: Menu
   m_TagString: Untagged
@@ -11256,6 +11257,18 @@ MonoBehaviour:
   - {fileID: 222432745}
   - {fileID: 108714148}
   - {fileID: 546999266}
+--- !u!114 &1382099707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1382099703}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5cb1ee1f19fb114da51e41bc675d788, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1404490693 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7779278223158895513, guid: 6acee3df58da5264c9f35c58c6cc5859, type: 3}
