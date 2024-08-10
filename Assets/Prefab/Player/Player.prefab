@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 6177186412102098031}
   - component: {fileID: 8058609671029932076}
   - component: {fileID: 1613416991521443949}
-  - component: {fileID: 4934576543259563243}
+  - component: {fileID: 3446248152349961972}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -127,6 +127,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   initialHealth: 0
+  currentHealth: 0
   healthBar: {fileID: 0}
   healAmount: 20
   healCooldown: 1
@@ -135,7 +136,6 @@ MonoBehaviour:
   normalBookEffect: {fileID: 7802979462468201273, guid: bddb971e34eb14d48be30c7b922eb077, type: 3}
   badBookEffect: {fileID: 5933602760919840800, guid: fcb74f28d107e284e80af037bfec14ca, type: 3}
   explosionEffect: {fileID: 7728366230342544413, guid: 212ef1a41838ce044a9ac54994866708, type: 3}
-  currentHealth: 0
 --- !u!114 &8265633430506155999
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -148,10 +148,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4f6a7752b84cd34790aa759a4e47fe3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 0}
-  rb2d: {fileID: 0}
+  animator: {fileID: 5032971257152120544}
+  rb2d: {fileID: 6177186412102098031}
   inventoryManager: {fileID: 0}
-  maxSpeed: 5
+  maxSpeed: 6.5
   acceleration: 50
   frictionAmount: 0.2
   buffPercentage: 0
@@ -266,10 +266,10 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.12835407}
-  m_Size: {x: 1, y: 1.1807919}
+  m_Offset: {x: 0, y: 0.010266304}
+  m_Size: {x: 1, y: 1.4169674}
   m_Direction: 0
---- !u!114 &4934576543259563243
+--- !u!114 &3446248152349961972
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -289,7 +289,7 @@ MonoBehaviour:
   m_Intensity: 2
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
-  m_ApplyToSortingLayers: 3986832c0000000085d7549a7d00df2ae7ab08c8d37e038df167a7fd998e83906fd1ae23b7ac0fce1dbc4de613b68c648947a607db64cab60d5c452c1b2d7c1f3d23042f83eae26a1b416d4141510450
+  m_ApplyToSortingLayers: 3986832c0000000085d7549a7d00df2ae7ab08c8d37e038df167a7fd998e83906fd1ae23b7ac0fce1dbc4de613b68c648947a607db64cab60d5c452c1b2d7c1f3d23042f83eae26a1b416d414151045087570145
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0

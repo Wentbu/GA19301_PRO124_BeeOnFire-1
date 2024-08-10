@@ -111,3 +111,6 @@ TagManager:
   - name: Overlay
     uniqueID: 1157715847
     locked: 0
+  - name: Fog
+    uniqueID: 3202015075
+    locked: 0
